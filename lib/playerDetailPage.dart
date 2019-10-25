@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dota_stats/PlayerDetails.dart';
 import 'basicProfileInfo.dart';
+import 'recentMatches.dart';
 
 class PlayerDetailPage extends StatefulWidget {
   final String steamId;
@@ -26,13 +27,13 @@ class _PlayerDetailState extends State<PlayerDetailPage> {
           if (snapshot.hasData) {
             return Scaffold(
                 appBar: AppBar(title: Text(snapshot.data.steamAccount.name)),
-                body: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                body: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           BasicProfileInfo(snapshot.data),
+                          RecentMatches(widget.steamId),
                           //MatchHistoryList(snapshot.data)
-                        ])));
+                        ]));
           } else if (snapshot.hasError) {
             return Scaffold(appBar: AppBar(title: Text("${snapshot.error}")));
           }
