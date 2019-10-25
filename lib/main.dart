@@ -33,12 +33,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<PlayerResults> playerResults;
   final TextEditingController controller = TextEditingController();
 
-  showCategoryDetailPage(
-      BuildContext context, int SteamId){
+  showProfilePage(BuildContext context, int steamId){
   Navigator.push(context, MaterialPageRoute(builder: (context){
-    return PlayerDetailPage(SteamId);
+    return PlayerDetailPage(steamId.toString());
   }));
-
   }
 
   @override
@@ -54,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: TextField(
           controller: controller,
           decoration: InputDecoration(
-            hintText: 'Pawn a Noob!',
+            hintText: 'Look up a Player',
           ),
           onSubmitted: (String query) {
             setState(() {
@@ -81,14 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemBuilder: (context, int) {
                         return InkWell(
                           onTap: () {
-                            loadProfilPage(context, snapshot.data.players[int].steamId);
+                            showProfilePage(context, snapshot.data.players[int].steamId);
                           },
                           child: PlayerListItem(snapshot.data.players[int])
                         );
                       }
                     );
-
-
 
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
