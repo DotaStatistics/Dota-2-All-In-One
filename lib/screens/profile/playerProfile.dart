@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/PlayerDetails.dart';
-import 'basicProfileInfo.dart';
-import 'recentMatches.dart';
+import 'package:dota_stats/screens/profile/components/PlayerDetails.dart';
+import 'components/basicProfileInfo.dart';
+import 'components/recentMatches.dart';
+
+//TODO theres a bug where some profiles wont show up
 
 class PlayerDetailPage extends StatefulWidget {
   final String steamId;

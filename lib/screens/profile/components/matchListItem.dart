@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'recentMatchesResults.dart';
+import 'package:dota_stats/screens/profile/components/recentMatchesResults.dart';
 
 class MatchListItem extends StatelessWidget{
   final RecentMatchesResults match;

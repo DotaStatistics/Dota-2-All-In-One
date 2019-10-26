@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/PlayerDetails.dart';
+import 'package:dota_stats/screens/profile/components/PlayerDetails.dart';
 
 class BasicProfileInfo extends StatelessWidget{
   final PlayerDetails playerDetails;
@@ -11,14 +11,12 @@ class BasicProfileInfo extends StatelessWidget{
       children: <Widget>[
         ProfilePic(playerDetails.steamAccount.avatar),
         Text("Games: " + playerDetails.matchCount.toString() + "   "),
-        Text("Wins: " + playerDetails.winCount.toString())
+        Text("Wins: " + playerDetails.winCount.toString() + "   "),
+        Text("Winrate: " + ((playerDetails.winCount/playerDetails.matchCount)*100).toString().substring(0,2) + "%"),
       ]
     );
   }
 }
-
-
-
 
 class ProfilePic extends StatelessWidget {
   final String avatar;
