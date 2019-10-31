@@ -1,7 +1,6 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:time_formatter/time_formatter.dart';
 
 Future<PlayerDetailsResults> fetchPlayerDetails(String steamId) async {
   final response =
