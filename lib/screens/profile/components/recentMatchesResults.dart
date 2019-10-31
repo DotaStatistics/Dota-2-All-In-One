@@ -7,9 +7,13 @@ Future<List<RecentMatchesResults>> fetchRecentMatches(String query) async {
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
     return recentMatchesResultsFromJson(response.body);
-  } else {
+  }
+  else if (response.statusCode == 403){
+    //TODO Error handling für privates profile
+  }
+  else {
     // If that call was not successful, throw an error.
-    throw Exception('Failed to load post');
+    throw Exception('Failed to load matches');
   }
 }
 

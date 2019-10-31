@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dota_stats/screens/profile/components/PlayerDetails.dart';
 
 class BasicProfileInfo extends StatelessWidget{
-  final PlayerDetails playerDetails;
+  final PlayerDetailsResults playerDetails;
   BasicProfileInfo(this.playerDetails);
 
   @override

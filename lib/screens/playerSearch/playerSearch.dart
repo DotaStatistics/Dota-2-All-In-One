@@ -55,7 +55,7 @@ class _PlayerSearchState extends State<PlayerSearchScreen> {
                       return InkWell(
                           onTap: () {
                             showProfilePage(context,
-                                snapshot.data.players[int].steamId);
+                                snapshot.data.players[int].id);
                           },
                           child: PlayerListItem(
                               snapshot.data.players[int]));

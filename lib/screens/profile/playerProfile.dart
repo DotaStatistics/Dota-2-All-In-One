@@ -13,7 +13,7 @@ class PlayerDetailPage extends StatefulWidget {
 }
 
 class _PlayerDetailState extends State<PlayerDetailPage> {
-  Future<PlayerDetails> playerDetails;
+  Future<PlayerDetailsResults> playerDetails;
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _PlayerDetailState extends State<PlayerDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PlayerDetails>(
+    return FutureBuilder<PlayerDetailsResults>(
         future: playerDetails,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

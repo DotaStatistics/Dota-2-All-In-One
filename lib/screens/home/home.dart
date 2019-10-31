@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Future<PlayerResults> playerResults;
-  final TextEditingController controller = TextEditingController();
 
   showProfilePage(BuildContext context, int steamId) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
