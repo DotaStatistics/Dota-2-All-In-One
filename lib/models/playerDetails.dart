@@ -1,18 +1,4 @@
-
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-Future<PlayerDetailsResults> fetchPlayerDetails(String steamId) async {
-  final response =
-  await http.get('https://api.stratz.com/api/v1/Player/' + steamId);
-  if (response.statusCode == 200) {
-    // If the call to the server was successful, parse the JSON.
-    return PlayerDetailsResults.fromJson(json.decode(response.body));
-  } else {
-    // If that call was not successful, throw an error.
-    throw Exception('Failed to load post');
-  }
-}
 
 PlayerDetailsResults playerDetailsResultsFromJson(String str) => PlayerDetailsResults.fromJson(json.decode(str));
 

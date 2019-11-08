@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/screens/profile/components/recentMatchesResults.dart';
+import 'package:dota_stats/models/dotaMatch.dart';
 
 class MatchListItem extends StatelessWidget{
-  final RecentMatchesResults match;
+  final DotaMatch match;
   MatchListItem(this.match);
 
   @override

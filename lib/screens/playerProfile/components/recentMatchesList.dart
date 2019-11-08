@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'recentMatchesResults.dart';
-import 'matchListItem.dart';
+import 'package:dota_stats/models/dotaMatch.dart';
+import 'recentMatchesListItem.dart';
+import 'package:dota_stats/screens/match/matchDetailsPage.dart';
+import 'package:dota_stats/apiCalls.dart';
 
-class RecentMatches extends StatefulWidget {
+class RecentMatchesList extends StatefulWidget {
   final String steamId;
-  RecentMatches(this.steamId);
+  RecentMatchesList(this.steamId);
 
   @override
-  _RecentMatchesState createState() => _RecentMatchesState();
+  _RecentMatchesListState createState() => _RecentMatchesListState();
 }
 
-class _RecentMatchesState extends State<RecentMatches> {
-  Future<List<RecentMatchesResults>> recentMatchesList;
-
-  showMatchDetails(BuildContext context, RecentMatchesResults match) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return null;//MatchDetailPage(matchId.toString());
-    }));
-  }
+class _RecentMatchesListState extends State<RecentMatchesList> {
+  Future<List<DotaMatch>> recentMatchesList;
 
   @override
   void initState() {
@@ -27,10 +23,10 @@ class _RecentMatchesState extends State<RecentMatches> {
 
   @override
   Widget build (BuildContext context) {
-    return FutureBuilder<List<RecentMatchesResults>>(
+    return FutureBuilder<List<DotaMatch>>(
       future: recentMatchesList,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.done) {
           return Expanded(
             child: ListView.builder(
             scrollDirection: Axis.vertical,
@@ -53,4 +49,10 @@ class _RecentMatchesState extends State<RecentMatches> {
       }
     );
   }
+}
+
+showMatchDetails(BuildContext context, DotaMatch match) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return MatchDetailsPage(match);//MatchDetailPage(matchId.toString());
+  }));
 }

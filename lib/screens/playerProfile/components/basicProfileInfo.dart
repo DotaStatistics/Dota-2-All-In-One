@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/screens/profile/components/PlayerDetails.dart';
+import 'package:dota_stats/models/playerDetails.dart';
 
 class BasicProfileInfo extends StatelessWidget{
   final PlayerDetailsResults playerDetails;

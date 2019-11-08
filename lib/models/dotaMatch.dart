@@ -1,27 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-Future<List<RecentMatchesResults>> fetchRecentMatches(String query) async {
-  final response =
-  await http.get('https://api.stratz.com/api/v1/Player/' + query + "/matches");
-  if (response.statusCode == 200) {
-    // If the call to the server was successful, parse the JSON.
-    return recentMatchesResultsFromJson(response.body);
-  }
-  else if (response.statusCode == 403){
-    //TODO Error handling für privates profile
-  }
-  else {
-    // If that call was not successful, throw an error.
-    throw Exception('Failed to load matches');
-  }
-}
+List<DotaMatch> recentMatchesResultsFromJson(String str) => List<DotaMatch>.from(json.decode(str).map((x) => DotaMatch.fromJson(x)));
 
-List<RecentMatchesResults> recentMatchesResultsFromJson(String str) => List<RecentMatchesResults>.from(json.decode(str).map((x) => RecentMatchesResults.fromJson(x)));
+String recentMatchesResultsToJson(List<DotaMatch> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-String recentMatchesResultsToJson(List<RecentMatchesResults> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class RecentMatchesResults {
+class DotaMatch {
   int id;
   bool didRadiantWin;
   int durationSeconds;
@@ -43,7 +26,7 @@ class RecentMatchesResults {
   List<Player> players;
   int avgImp;
 
-  RecentMatchesResults({
+  DotaMatch({
     this.id,
     this.didRadiantWin,
     this.durationSeconds,
@@ -66,7 +49,7 @@ class RecentMatchesResults {
     this.avgImp,
   });
 
-  factory RecentMatchesResults.fromJson(Map<String, dynamic> json) => RecentMatchesResults(
+  factory DotaMatch.fromJson(Map<String, dynamic> json) => DotaMatch(
     id: json["id"],
     didRadiantWin: json["didRadiantWin"],
     durationSeconds: json["durationSeconds"],

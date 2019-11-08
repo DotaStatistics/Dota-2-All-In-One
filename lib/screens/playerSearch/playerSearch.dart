@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/screens/playerSearch/components/playerResults.dart';
-import 'package:dota_stats/screens/profile/playerProfile.dart';
-import 'package:dota_stats/screens/playerSearch/components/playerListItem.dart';
+import 'package:dota_stats/apiCalls.dart';
+import 'package:dota_stats/models/playerResults.dart';
+import 'package:dota_stats/screens/playerSearch/components/playerList.dart';
+
+// TODO: implement as Singleton
 
 class PlayerSearchScreen extends StatefulWidget {
   PlayerSearchScreen();
@@ -12,64 +14,41 @@ class PlayerSearchScreen extends StatefulWidget {
 class _PlayerSearchState extends State<PlayerSearchScreen> {
   Future<PlayerResults> playerResults;
   final TextEditingController controller = TextEditingController();
-  bool loading = false;
-
-  showProfilePage(BuildContext context, int steamId) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return PlayerDetailPage(steamId.toString());
-    }));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: <Widget> [
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: 'Look up a Player',
-            ),
-            onSubmitted: (String query) {
-              setState(() {
-                playerResults = fetchPlayerResults(controller.text);
-                loading = true;
-
-              });
-              controller.text = '';
-            },
-          ),
-          FutureBuilder<PlayerResults>(
-            future: playerResults,
-            builder: (context, snapshot) {
-              if (loading == false){
-                return Container();
-              }
-              if (snapshot.hasData) {
-                return Expanded(
-                    child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.players.length,
-                    itemBuilder: (context, int) {
-                      return InkWell(
-                          onTap: () {
-                            showProfilePage(context,
-                                snapshot.data.players[int].id);
-                          },
-                          child: PlayerListItem(
-                              snapshot.data.players[int]));
-                    }));
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
-          )
-        ]
+        child: Column(
+            children: <Widget>[
+      TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: 'Look up a Player:',
+        ),
+        onSubmitted: (String query) {
+          setState(() {
+            playerResults = fetchPlayerResults(controller.text);
+          });
+        },
+      ),
+      FutureBuilder<PlayerResults>(
+        future: playerResults,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasData) {
+            //TODO Popup if 0 profiles found
+            return PlayerList(snapshot.data.players);
+          }
+           else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return Expanded(child:Container(
+           // color: Color.fromRGBO(3, 20, 31, 1)
+          ));
+        },
       )
-    );
+    ]));
   }
-
 }
