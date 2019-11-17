@@ -1,3 +1,5 @@
+import 'package:dota_stats/screens/heroes/heroes.dart';
+import 'package:dota_stats/screens/items/items.dart';
 import 'package:flutter/material.dart';
 import 'package:dota_stats/screens/playerSearch/playerSearch.dart';
 
@@ -22,8 +24,8 @@ class Home extends StatelessWidget {
           ),
           body: TabBarView(children: [
             PlayerSearchScreen(), // This Widget will be shown by default
-            Text("Heroes here"),
-            Text("Items here"),
+            HeroScreen(),
+            ItemScreen(),
           ]),
         ));
   }
