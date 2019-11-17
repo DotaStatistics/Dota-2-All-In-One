@@ -12,7 +12,7 @@ class PlayerProfile extends StatefulWidget {
 }
 
 class _PlayerProfileState extends State<PlayerProfile> {
-  Future<PlayerDetailsResults> playerDetails;
+  Future<PlayerDetails> playerDetails;
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
   }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PlayerDetailsResults>(
+    return FutureBuilder<PlayerDetails>(
         future: playerDetails,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-PlayerDetailsResults playerDetailsResultsFromJson(String str) => PlayerDetailsResults.fromJson(json.decode(str));
+PlayerDetails playerDetailsResultsFromJson(String str) => PlayerDetails.fromJson(json.decode(str));
 
-String playerDetailsResultsToJson(PlayerDetailsResults data) => json.encode(data.toJson());
+String playerDetailsResultsToJson(PlayerDetails data) => json.encode(data.toJson());
 
-class PlayerDetailsResults {
+class PlayerDetails {
   SteamAccount steamAccount;
   List<BattlePass> battlePass;
   int date;
@@ -19,7 +19,7 @@ class PlayerDetailsResults {
   TeamElement team;
   int behaviorScore;
 
-  PlayerDetailsResults({
+  PlayerDetails({
     this.steamAccount,
     this.battlePass,
     this.date,
@@ -35,7 +35,7 @@ class PlayerDetailsResults {
     this.behaviorScore,
   });
 
-  factory PlayerDetailsResults.fromJson(Map<String, dynamic> json) => PlayerDetailsResults(
+  factory PlayerDetails.fromJson(Map<String, dynamic> json) => PlayerDetails(
     steamAccount: json["steamAccount"] == null ? null : SteamAccount.fromJson(json["steamAccount"]),
     battlePass: json["battlePass"] == null ? null : List<BattlePass>.from(json["battlePass"].map((x) => BattlePass.fromJson(x))),
     date: json["date"] == null ? null : json["date"],

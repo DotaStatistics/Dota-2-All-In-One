@@ -24,3 +24,17 @@ class PlayerResults {
 PlayerResults playerResultsFromJson(String str) => PlayerResults.fromJson(json.decode(str));
 
 String playerResultsToJson(PlayerResults data) => json.encode(data.toJson());
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
+}

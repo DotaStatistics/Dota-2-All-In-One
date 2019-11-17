@@ -5,21 +5,20 @@ import 'package:dota_stats/screens/playerSearch/components/playerList.dart';
 
 // TODO: implement as Singleton
 
-class PlayerSearchScreen extends StatefulWidget {
-  PlayerSearchScreen();
+class PlayerSearch extends StatefulWidget {
+  PlayerSearch();
   @override
   _PlayerSearchState createState() => _PlayerSearchState();
 }
 
-class _PlayerSearchState extends State<PlayerSearchScreen> {
+class _PlayerSearchState extends State<PlayerSearch> {
   Future<PlayerResults> playerResults;
   final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-            children: <Widget>[
+        child: Column(children: <Widget>[
       TextField(
         controller: controller,
         decoration: InputDecoration(
@@ -37,17 +36,19 @@ class _PlayerSearchState extends State<PlayerSearchScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           }
-          if (snapshot.hasData) {
-            //TODO Popup if 0 profiles found
-            return PlayerList(snapshot.data.players);
-          }
-           else if (snapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if ( snapshot.data.players.length == 0) {
+              return Text("No profiles found. Try again");
+            }
+             return PlayerList(snapshot.data.players);
+          } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return Expanded(child:Container(
-           // color: Color.fromRGBO(3, 20, 31, 1)
-          ));
-        },
+          return Expanded(
+              child: Container(
+                  color: Color.fromRGBO(3, 20, 31, 1)
+                  ));
+  },
       )
     ]));
   }

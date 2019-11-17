@@ -8,9 +8,9 @@ import 'package:dota_stats/models/dotaMatch.dart';
 Future<PlayerResults> fetchPlayerResults(String query) async {
   final response =
   await http.get('https://api.stratz.com/api/v1/search/player?q=' + query +
-     '&lastSeen=' + DateTime(
+     '&lastSeen="' + DateTime(
       DateTime.now().year,DateTime.now().month - 1)
-      .millisecondsSinceEpoch.toString().substring(0,9)
+      .millisecondsSinceEpoch.toString() + '"'
   );
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
@@ -21,12 +21,12 @@ Future<PlayerResults> fetchPlayerResults(String query) async {
   }
 }
 
-Future<PlayerDetailsResults> fetchPlayerDetails(String steamId) async {
+Future<PlayerDetails> fetchPlayerDetails(String steamId) async {
   final response =
   await http.get('https://api.stratz.com/api/v1/Player/' + steamId);
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
-    return PlayerDetailsResults.fromJson(json.decode(response.body));
+    return PlayerDetails.fromJson(json.decode(response.body));
   } else {
     // If that call was not successful, throw an error.
     throw Exception('Failed to load post');
