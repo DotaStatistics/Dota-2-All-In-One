@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
             ),
           ),
           body: TabBarView(children: [
-            PlayerSearchScreen(), // This Widget will be shown by default
+            PlayerSearch(), // This Widget will be shown by default
             Text("Heroes here"),
             Text("Items here"),
           ]),
