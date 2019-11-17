@@ -2,11 +2,10 @@ import "package:flutter/material.dart";
 import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
-
-
-
+import 'package:dota_stats/drawer.dart';
 
 class ItemScreen extends StatefulWidget {
+  static const String routeName = '/items';
   ItemScreen();
   @override
   ItemState createState() => new ItemState();
@@ -45,6 +44,10 @@ class ItemState extends State<ItemScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        appBar: AppBar(
+          title: Text("List of Items"),
+        ),
+        drawer: AppDrawer(),
         body: new ListView.builder(
           itemCount: data.length,
 //          itemCount: data == null ? 0 : data.length,

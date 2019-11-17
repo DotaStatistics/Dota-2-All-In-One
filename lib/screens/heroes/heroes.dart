@@ -2,11 +2,11 @@ import "package:flutter/material.dart";
 import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
-
-
+import 'package:dota_stats/drawer.dart';
 
 
 class HeroScreen extends StatefulWidget {
+  static const String routeName = '/heroes';
   HeroScreen();
   @override
   HeroState createState() => new HeroState();
@@ -37,7 +37,7 @@ class HeroState extends State<HeroScreen> {
     setState(() {
       data =  json.decode(response.body);
 //      var convertDataToJson = json.decode(response.body);
-//      data = convertDataToJson["results"];
+//      data = convertDataToJson["results"];d
     });
     return "Success";
   }
@@ -45,6 +45,10 @@ class HeroState extends State<HeroScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: AppBar(
+        title: Text("List of Heroes"),
+      ),
+        drawer: AppDrawer(),
         body: new ListView.builder(
           itemCount: data.length,
 //          itemCount: data == null ? 0 : data.length,
