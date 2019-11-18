@@ -1,3 +1,4 @@
+import 'package:dota_stats/screens/playerSearch/components/savedPlayersList.dart';
 import 'package:flutter/material.dart';
 import 'package:dota_stats/apiCalls.dart';
 import 'package:dota_stats/models/playerResults.dart';
@@ -44,10 +45,7 @@ class _PlayerSearchState extends State<PlayerSearch> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return Expanded(
-              child: Container(
-                  color: Color.fromRGBO(3, 20, 31, 1)
-                  ));
+          return SavedPlayersList();
   },
       )
     ]));

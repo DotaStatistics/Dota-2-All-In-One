@@ -3,6 +3,8 @@ import 'package:dota_stats/models/player.dart';
 import 'playerListItem.dart';
 import 'package:dota_stats/screens/playerProfile/playerProfile.dart';
 
+import 'package:dota_stats/database.dart';
+
 class PlayerList extends StatelessWidget {
   final List<Player> players;
   PlayerList(this.players);
