@@ -21,27 +21,26 @@ class _SavedPlayersState extends State<SavedPlayersList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<DBPlayer>>(
-      future: players,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Expanded(
-              child: Container(
-                  color: Colors.blueGrey,
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, int) {
-                        return InkWell(
-                            onTap: () {showProfilePage(context, snapshot.data[int].id);},
-                            child: SavedPlayerListItem(snapshot.data[int]));
-                      })));
-        }
-        else {
-
-          return Container();
-        }
-      }
-    );
+        future: players,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Expanded(
+                child: Container(
+                    color: Colors.blueGrey,
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, int) {
+                          return InkWell(
+                              onTap: () {
+                                showProfilePage(context, snapshot.data[int].id);
+                              },
+                              child: SavedPlayerListItem(snapshot.data[int]));
+                        })));
+          } else {
+            return Container();
+          }
+        });
   }
 }

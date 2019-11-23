@@ -6,21 +6,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-
   static final _databaseName = "All_In_One_Dota2";
   static final _databaseVersion = 1;
-
-  static final table = 'my_table';
-
-  static final columnId = '_id';
-  static final columnName = 'name';
-  static final columnAge = 'age';
-
   // make this a singleton class
   DatabaseHelper._privateConstructor();
-
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
-
   // only have a single app-wide reference to the database
   static Database _database;
 
@@ -30,7 +20,6 @@ class DatabaseHelper {
     _database = await _initDatabase();
     return _database;
   }
-
 
   _initDatabase() async {
     String dataBaseDirectory = await getDatabasesPath();
