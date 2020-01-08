@@ -27,6 +27,7 @@ dependencies:
   sqflite:
   path:
   flare_flutter:
+  pie_chart:
 
 dev_dependencies:
   flutter_test:

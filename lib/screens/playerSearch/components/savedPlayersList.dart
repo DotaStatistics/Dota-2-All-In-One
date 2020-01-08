@@ -26,7 +26,6 @@ class _SavedPlayersState extends State<SavedPlayersList> {
           if (snapshot.hasData) {
             return Expanded(
                 child: Container(
-                    color: Colors.blueGrey,
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,

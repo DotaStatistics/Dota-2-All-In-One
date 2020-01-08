@@ -4,10 +4,19 @@ import 'dart:convert';
 import 'package:dota_stats/models/playerResults.dart';
 import 'package:dota_stats/models/playerDetails.dart';
 import 'package:dota_stats/models/dotaMatch.dart';
+import 'package:dota_stats/models/playerInfo.dart';
+import 'models/item.dart';
+const playerSearch = 'https://api.stratz.com/api/v1/search/player?q=';
+
+
+//TODO Konstanten definieren
+//TODO eventuell alles als eine methode mit switch case
+//TODO anfang der url als konstante?
+
 
 Future<PlayerResults> fetchPlayerResults(String query) async {
   final response =
-  await http.get('https://api.stratz.com/api/v1/search/player?q=' + query +
+  await http.get( playerSearch + query +
      '&lastSeen="' + DateTime(
       DateTime.now().year,DateTime.now().month - 1)
       .millisecondsSinceEpoch.toString() + '"'
@@ -21,24 +30,54 @@ Future<PlayerResults> fetchPlayerResults(String query) async {
   }
 }
 
-Future<PlayerDetails> fetchPlayerDetails(String steamId) async {
+Future<PlayerInfo> fetchPlayerInfo(String steamId) async {
+  PlayerDetails playerDetails;
+  List<DotaMatch> matches;
   final response =
   await http.get('https://api.stratz.com/api/v1/Player/' + steamId);
+
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
-    return PlayerDetails.fromJson(json.decode(response.body));
+    playerDetails = PlayerDetails.fromJson(json.decode(response.body));
   } else {
     // If that call was not successful, throw an error.
     throw Exception('Failed to load post');
   }
-}
 
+  final response2 =
+  await http.get('https://api.stratz.com/api/v1/Player/' + steamId + "/matches");
+  if (response2.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    matches = recentMatchesResultsFromJson(response2.body);
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load matches');
+  }
+  return PlayerInfo(playerDetails, matches);
+}
+/*
 Future<List<DotaMatch>> fetchRecentMatches(String query) async {
   final response =
   await http.get('https://api.stratz.com/api/v1/Player/' + query + "/matches");
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
     return recentMatchesResultsFromJson(response.body);
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load matches');
+  }
+}
+
+*/
+
+Future<Map<String,Item>> fetchItemList() async {
+  final response=
+      await http.get('https://api.stratz.com/api/v1/Item');
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    return itemFromJson(response.body);
   }
   else {
     // If that call was not successful, throw an error.

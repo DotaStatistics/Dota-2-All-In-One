@@ -16,6 +16,7 @@ class Home extends StatelessWidget {
           ),
           drawer: AppDrawer(),
           body: PlayerSearch(),
+          backgroundColor: Theme.of(context).primaryColor,
         );
   }
 }

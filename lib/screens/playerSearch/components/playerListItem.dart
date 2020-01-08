@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dota_stats/models/player.dart';
 
+
+//TODO too long username produces visual error
+
 class PlayerListItem extends StatelessWidget {
   final Player player;
   PlayerListItem(this.player);

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:dota_stats/models/playerDetails.dart';
+import 'package:dota_stats/models/playerInfo.dart';
 import 'components/basicProfileInfo.dart';
 import 'components/recentMatchesList.dart';
 import 'package:dota_stats/apiCalls.dart';
 import 'package:dota_stats/database.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:dota_stats/models/playerInfo.dart';
+import 'components/review.dart';
 
 class PlayerProfile extends StatefulWidget {
   final String steamId;
@@ -14,14 +16,14 @@ class PlayerProfile extends StatefulWidget {
 }
 
 class _PlayerProfileState extends State<PlayerProfile> {
-  Future<PlayerDetails> playerDetails;
+  Future<PlayerInfo> playerInfo;
   DatabaseHelper db = DatabaseHelper.instance;
   bool saved;
 
   @override
   void initState() {
     super.initState();
-    playerDetails = fetchPlayerDetails(widget.steamId);
+    playerInfo = fetchPlayerInfo(widget.steamId);
     initSavedStatus();
   }
 
@@ -32,15 +34,15 @@ class _PlayerProfileState extends State<PlayerProfile> {
     });
   }
 
-  void addToSavedProfiles(PlayerDetails playerDetails) {
-    db.insertPlayer(DBPlayer.fromAPI(playerDetails));
+  void addToSavedProfiles(PlayerInfo playerInfo) {
+    db.insertPlayer(DBPlayer.fromAPI(playerInfo));
     setState(() {
       saved = true;
     });
   }
 
-  void deleteFromSavedProfiles(PlayerDetails playerDetails) {
-    db.deletePlayer(DBPlayer.fromAPI(playerDetails));
+  void deleteFromSavedProfiles(PlayerInfo playerInfo) {
+    db.deletePlayer(DBPlayer.fromAPI(playerInfo));
     setState(() {
       saved = false;
     });
@@ -49,13 +51,13 @@ class _PlayerProfileState extends State<PlayerProfile> {
   //TODO: Close db when profile is closed
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PlayerDetails>(
-        future: playerDetails,
+    return FutureBuilder<PlayerInfo>(
+        future: playerInfo,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
                 appBar: AppBar(
-                    title: Text(snapshot.data.steamAccount.name),
+                    title: Text(snapshot.data.details.steamAccount.name),
                     actions: <Widget>[
                       IconButton(
                           icon: FlareActor("assets/animations/star.flr",
@@ -67,12 +69,15 @@ class _PlayerProfileState extends State<PlayerProfile> {
                                 : addToSavedProfiles(snapshot.data);
                           })
                     ]),
-                body: Column(
+                body: Container(
+                  color: Theme.of(context).primaryColor,
+                  child:Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      BasicProfileInfo(snapshot.data),
-                      RecentMatchesList(widget.steamId),
-                    ]));
+                      BasicProfileInfo(snapshot.data.details),
+                      Review(snapshot.data),
+                      RecentMatchesList(snapshot.data.matches),
+                    ])));
           } else if (snapshot.hasError) {
             return Scaffold(appBar: AppBar(title: Text("${snapshot.error}")));
           }
