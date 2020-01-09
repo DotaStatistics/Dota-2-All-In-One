@@ -44,7 +44,7 @@ class AppDrawer extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/images/logo4.jpg'))),
+                image: AssetImage('assets/images/logo.jpg'))),
         child: Stack(children: <Widget>[
 //          Positioned(
 //              bottom: 12.0,
