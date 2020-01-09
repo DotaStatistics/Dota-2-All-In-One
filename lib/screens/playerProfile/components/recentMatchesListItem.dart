@@ -16,7 +16,7 @@ class MatchListItem extends StatelessWidget{
           children: <Widget> [
             Text(match.players[0].isVictory ? "WIN" : "LOSS",
             style: match.players[0].isVictory ? FontStyles.win() : FontStyles.loss()),
-            PurchasedItemsList(match.players[0]),
+            //PurchasedItemsList(match.players[0]),
             KDA(match.players[0].numKills, match.players[0].numDeaths,match.players[0].numAssists)
           ]
         )

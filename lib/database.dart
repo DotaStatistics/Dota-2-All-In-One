@@ -9,11 +9,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:dota_stats/models/item.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "All_In_One_Dota2";
-  static final _databaseVersion = 1;
+  static final _databaseName = "All_In_One_Dota2_2";
+  static final _databaseVersion = 2;
+
   // make this a singleton class
   DatabaseHelper._privateConstructor();
+
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+
   // only have a single app-wide reference to the database
   static Database _database;
 
@@ -26,20 +29,22 @@ class DatabaseHelper {
 
   _initDatabase() async {
     String dataBaseDirectory = await getDatabasesPath();
-    String path = join(dataBaseDirectory, _databaseName);
+    String path = join(dataBaseDirectory, _databaseName,);
     return await openDatabase(path, version: _databaseVersion,
         onCreate: (db, version) async {
-      await db.execute(
-          "CREATE TABLE savedProfiles(id INTEGER PRIMARY KEY, name TEXT, avatar TEXT),"
-              "CREATE TABLE itemList(id INTEGER PRIMARY KEY, name TEXT),",
-     );
-    });
+          await db.execute(
+            "CREATE TABLE savedProfiles(id INTEGER PRIMARY KEY, name TEXT, avatar TEXT)",
+          );
+          await db.execute(
+            "CREATE TABLE itemList(id INTEGER PRIMARY KEY, name TEXT, image TEXT)",
+          );
+        });
   }
 
   Future<bool> isSaved(int id) async {
     final Database db = await DatabaseHelper.instance.database;
     var response =
-        await db.query("savedProfiles", where: "id = ?", whereArgs: [id]);
+    await db.query("savedProfiles", where: "id = ?", whereArgs: [id]);
     return response.isEmpty ? false : true;
   }
 
@@ -78,32 +83,33 @@ class DatabaseHelper {
       );
     });
   }
-}
 
-Future<void> fillItemTable(List<DBItem> items) async {
-  final Database db = await DatabaseHelper.instance.database;
-  items.forEach((item) => {
-    db.insert(
-      'itemList',
-      item.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    )
-  });
+  Future<void> fillItemTable(List<DBItem> items) async {
+    final Database db = await DatabaseHelper.instance.database;
+    items.forEach((item) =>
+    {
+      db.insert(
+        'itemList',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      )
+    });
+  }
 
-}
+  Future<List<String>> getImageUrl(List<int> itemIds) async {
+    final Database db = await DatabaseHelper.instance.database;
+    List<String> items;
 
-Future<List<DBItem>> getImageUrl(int itemId) async{
-  final Database db = await DatabaseHelper.instance.database;
-  final List<Map<String, dynamic>> maps = await db.query("itemList", where: "id = ?", whereArgs: [itemId],);
-  print(maps);
-  return List.generate(maps.length, (i) {
-    return DBItem(
-      id: maps[i]['id'],
-      name: maps[i]['name'],
-      image: maps[i]['image'],
-    );
-  });
-
+    for (int i = 0; i < itemIds.length; i++) {
+      final List<Map<String, dynamic>> maps = await db.query(
+        "itemList",
+        where: "id = ?",
+        whereArgs: [itemIds[i]],
+      );
+      items.add(maps[0]['image']);
+    }
+    return items;
+  }
 }
 
 //TODO saved & recent booleans in datenbank integrieren
@@ -138,13 +144,11 @@ class DBItem {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name' : name,
-      'image' : image,
+      'name': name,
+      'image': image,
     };
   }
 
-  factory DBItem.fromAPI(Item item) => DBItem(
-    id: item.id,
-    name: item.name,
-    image: item.image);
+  factory DBItem.fromAPI(Item item) =>
+      DBItem(id: item.id, name: item.name, image: item.image);
 }

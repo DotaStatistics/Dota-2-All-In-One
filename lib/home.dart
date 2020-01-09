@@ -1,15 +1,15 @@
+import 'package:dota_stats/apiCalls.dart';
 import 'package:flutter/material.dart';
 import 'package:dota_stats/screens/playerSearch/playerSearch.dart';
 import 'drawer.dart';
+import 'database.dart';
 
 
 class Home extends StatelessWidget {
   static const String routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    /* Our Scaffold has to be wrapped in a TabController so that this Controller
-    can display the Tabs in the AppBar and the different pages in the body
-     */
+    //initiateItemList();
         return Scaffold(
           appBar: AppBar(
             title: Text("home"),
@@ -19,4 +19,13 @@ class Home extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
         );
   }
+}
+
+void initiateItemList(){
+  fetchItemList().then((result){
+    List<DBItem> itemList = List();
+    result.forEach((k,v) => itemList.add(DBItem.fromAPI(v)));
+    DatabaseHelper.instance.fillItemTable(itemList);
+  });
+
 }

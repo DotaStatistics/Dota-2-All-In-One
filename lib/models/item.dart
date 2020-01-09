@@ -125,7 +125,7 @@ class Stat {
   List<int> castRange;
   List<double> castPoint;
   List<double> cooldown;
-  List<int> manaCost;
+  List<double> manaCost;
   SharedCooldown sharedCooldown;
   int cost;
   String shopTags;
@@ -200,7 +200,7 @@ class Stat {
     castRange: json["castRange"] == null ? null : List<int>.from(json["castRange"].map((x) => x)),
     castPoint: json["castPoint"] == null ? null : List<double>.from(json["castPoint"].map((x) => x.toDouble())),
     cooldown: json["cooldown"] == null ? null : List<double>.from(json["cooldown"].map((x) => x.toDouble())),
-    manaCost: json["manaCost"] == null ? null : List<int>.from(json["manaCost"].map((x) => x)),
+    manaCost: json["manaCost"] == null ? null : List<double>.from(json["manaCost"].map((x) => x)),
     sharedCooldown: json["sharedCooldown"] == null ? null : sharedCooldownValues.map[json["sharedCooldown"]],
     cost: json["cost"] == null ? null : json["cost"],
     shopTags: json["shopTags"] == null ? null : json["shopTags"],
