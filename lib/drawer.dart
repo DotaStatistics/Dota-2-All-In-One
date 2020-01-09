@@ -30,7 +30,7 @@ class AppDrawer extends StatelessWidget {
             text: 'Settings',
             onTap: () =>
                 //TODO settings route
-                  Navigator.pushReplacementNamed(context, Routes.settings),
+                  Navigator.pushReplacementNamed(context, Routes.home),
           )
         ],
       ),
