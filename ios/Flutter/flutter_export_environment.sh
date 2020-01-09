@@ -1,10 +1,10 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/matengehteuchnixan/Programmieren/Tools/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/matengehteuchnixan/Programmieren-Projekte/Flutter/Dota-2-All-In-One-GIT"
+export "FLUTTER_ROOT=/Users/mk/Programmieren/Tools/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/mk/Programmieren/#Projekte/Flutter/Dota2"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
-export "FLUTTER_FRAMEWORK_DIR=/Users/matengehteuchnixan/Programmieren/Tools/flutter/bin/cache/artifacts/engine/ios"
+export "FLUTTER_FRAMEWORK_DIR=/Users/mk/Programmieren/Tools/flutter/bin/cache/artifacts/engine/ios"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"

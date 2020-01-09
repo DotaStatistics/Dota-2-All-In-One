@@ -6,6 +6,7 @@ import 'package:dota_stats/screens/playerSearch/components/playerList.dart';
 
 // TODO: implement as Singleton
 // TODO: suchfeld auf den seiten beschneiden (nicht volle breite)
+// TODO: SearchIcon einfügen im Textfield
 
 class PlayerSearch extends StatefulWidget {
   PlayerSearch();
@@ -22,19 +23,22 @@ class _PlayerSearchState extends State<PlayerSearch> {
     return Container(
         child: Center(
             child: Column(children: <Widget>[
-      Container(
-          color: Colors.white70,
-          child: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: 'Look up a Player:',
-            ),
-            onSubmitted: (String query) {
-              setState(() {
-                playerResults = fetchPlayerResults(controller.text);
-              });
-            },
-          ),),
+              Container(
+                margin: const EdgeInsets.only(right: 10, left: 10),
+                color: Colors.white70,
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: 'Look up a Player:',
+                    contentPadding: const EdgeInsets.fromLTRB(10,0,0,0),
+                  ),
+                  onSubmitted: (String query) {
+                    setState(() {
+                      playerResults = fetchPlayerResults(controller.text);
+                    });
+                  },
+                ),),
       FutureBuilder<PlayerResults>(
         future: playerResults,
         builder: (context, snapshot) {

@@ -30,7 +30,7 @@ class AppDrawer extends StatelessWidget {
             text: 'Settings',
             onTap: () =>
                 //TODO settings route
-                Navigator.pushReplacementNamed(context, Routes.home),
+                  Navigator.pushReplacementNamed(context, Routes.settings),
           )
         ],
       ),
@@ -44,16 +44,16 @@ class AppDrawer extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/images/logo.jpg'))),
+                image: AssetImage('assets/images/logo4.jpg'))),
         child: Stack(children: <Widget>[
-          Positioned(
-              bottom: 12.0,
-              left: 16.0,
-              child: Text("Dota 2 All-In-One",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500))),
+//          Positioned(
+//              bottom: 12.0,
+//              left: 16.0,
+//              child: Text("Dota 2 All-In-One",
+//                  style: TextStyle(
+//                      color: Colors.white,
+//                      fontSize: 20.0,
+//                      fontWeight: FontWeight.w500))),
         ]));
   }
 
