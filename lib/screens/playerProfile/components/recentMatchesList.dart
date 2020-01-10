@@ -5,9 +5,6 @@ import 'recentMatchesListItem.dart';
 import 'package:dota_stats/screens/match/matchDetailsPage.dart';
 import 'package:dota_stats/apiCalls.dart';
 
-
-// TODO: scrollable?
-
 class RecentMatchesList extends StatefulWidget {
   final List<DotaMatch> matches;
   RecentMatchesList(this.matches);

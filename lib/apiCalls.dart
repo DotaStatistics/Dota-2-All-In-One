@@ -1,3 +1,5 @@
+import 'package:dota_stats/models/gameModes.dart';
+import 'package:dota_stats/models/role.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -56,21 +58,6 @@ Future<PlayerInfo> fetchPlayerInfo(String steamId) async {
   }
   return PlayerInfo(playerDetails, matches);
 }
-/*
-Future<List<DotaMatch>> fetchRecentMatches(String query) async {
-  final response =
-  await http.get('https://api.stratz.com/api/v1/Player/' + query + "/matches");
-  if (response.statusCode == 200) {
-    // If the call to the server was successful, parse the JSON.
-    return recentMatchesResultsFromJson(response.body);
-  }
-  else {
-    // If that call was not successful, throw an error.
-    throw Exception('Failed to load matches');
-  }
-}
-
-*/
 
 Future<Map<String,Item>> fetchItemList() async {
   final response=
@@ -81,11 +68,32 @@ Future<Map<String,Item>> fetchItemList() async {
   }
   else {
     // If that call was not successful, throw an error.
-    throw Exception('Failed to load matches');
+    throw Exception('Failed to load items');
   }
 }
 
-//TODO implement an API-Call to get an up-to-date List of Heroes
+Future<Map<String,GameMode>> fetchGameModeList() async {
+  final response=
+  await http.get('https://api.stratz.com/api/v1/GameMode');
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    return gameModeFromJson(response.body);
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load gamemodes');
+  }
+}
 
-
-//TODO implement an API-Call to get an up-to-date List of Items
+Future<List<Role>> fetchRoleList() async {
+  final response=
+  await http.get('https://api.stratz.com/api/v1/Hero/roles');
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    return roleFromJson(response.body);
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load roles');
+  }
+}

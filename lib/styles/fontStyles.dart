@@ -29,13 +29,13 @@ class FontStyles {
 
   static TextStyle win(){
     return TextStyle(
-      color: Colors.redAccent,
+      color: Colors.green,
       fontSize: 22.0,
     );
   }
   static TextStyle loss(){
     return TextStyle(
-      color: Colors.green,
+      color: Colors.redAccent,
       fontSize: 22.0,
     );
   }

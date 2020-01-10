@@ -123,6 +123,7 @@ class Player {
   int item3Id;
   int item4Id;
   int item5Id;
+  List<int> itemList;
   int heroHealing;
   bool isVictory;
   bool isRandom;
@@ -160,6 +161,7 @@ class Player {
     this.item3Id,
     this.item4Id,
     this.item5Id,
+    this.itemList,
     this.heroHealing,
     this.isVictory,
     this.isRandom,
@@ -198,6 +200,7 @@ class Player {
     item3Id: json["item3Id"] == null ? null : json["item3Id"],
     item4Id: json["item4Id"] == null ? null : json["item4Id"],
     item5Id: json["item5Id"],
+    itemList: [json["item0Id"],json["item1Id"],json["item2Id"], json["item3Id"],json["item4Id"], json["item5Id"]],
     heroHealing: json["heroHealing"],
     isVictory: json["isVictory"],
     isRandom: json["isRandom"] == null ? null : json["isRandom"],
@@ -236,6 +239,7 @@ class Player {
     "item3Id": item3Id == null ? null : item3Id,
     "item4Id": item4Id == null ? null : item4Id,
     "item5Id": item5Id,
+    "itemList" : [item0Id, item1Id, item2Id, item3Id, item4Id, item5Id],
     "heroHealing": heroHealing,
     "isVictory": isVictory,
     "isRandom": isRandom == null ? null : isRandom,

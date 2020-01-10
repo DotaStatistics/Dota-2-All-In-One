@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:ffi';
 import 'package:dota_stats/models/playerInfo.dart';
-import 'package:dota_stats/models/playerDetails.dart';
+import 'models/gameModes.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:dota_stats/models/item.dart';
+import 'models/role.dart';
+
+//TODO: save Gameversion and check for updates on startup
 
 class DatabaseHelper {
-  static final _databaseName = "All_In_One_Dota2_2";
+  static final _databaseName = "All_In_One_Dota2_v4";
   static final _databaseVersion = 2;
+  //static final _gameVersion
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -37,6 +41,12 @@ class DatabaseHelper {
           );
           await db.execute(
             "CREATE TABLE itemList(id INTEGER PRIMARY KEY, name TEXT, image TEXT)",
+          );
+          await db.execute(
+            "CREATE TABLE gameModeList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
+          );
+          await db.execute(
+            "CREATE TABLE roleList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
           );
         });
   }
@@ -96,20 +106,75 @@ class DatabaseHelper {
     });
   }
 
-  Future<List<String>> getImageUrl(List<int> itemIds) async {
+  Future<List<DBItem>> itemList() async {
     final Database db = await DatabaseHelper.instance.database;
-    List<String> items;
+    final List<Map<String, dynamic>> maps = await db.query('itemList');
 
-    for (int i = 0; i < itemIds.length; i++) {
+    // Convert the List
+    return List.generate(maps.length, (i) {
+      return DBItem(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+        image: maps[i]['image'],
+      );
+    });
+  }
+
+  Future<String> getImageUrl(int itemId) async {
+    final Database db = await DatabaseHelper.instance.database;
       final List<Map<String, dynamic>> maps = await db.query(
         "itemList",
         where: "id = ?",
-        whereArgs: [itemIds[i]],
+        whereArgs: [itemId],
       );
-      items.add(maps[0]['image']);
+    return maps[0]['image'];
     }
-    return items;
+
+  Future<void> fillGameModeTable(List<GameMode> modes) async {
+    final Database db = await DatabaseHelper.instance.database;
+    modes.forEach((mode) =>
+    {
+      db.insert(
+        'gameModeList',
+        mode.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      )
+    });
   }
+
+  Future<String> getGameModeName(int id) async {
+    final Database db = await DatabaseHelper.instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      "gameModeList",
+      where: "id = ?",
+      whereArgs: [id],
+    );
+    return maps[0]['name'];
+  }
+
+  Future<void> fillRoleTable(List<Role> roles) async {
+    final Database db = await DatabaseHelper.instance.database;
+    roles.forEach((role) =>
+    {
+      db.insert(
+        'roleList',
+        role.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      )
+    });
+  }
+
+  Future<String> getRoleName(int id) async {
+    final Database db = await DatabaseHelper.instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      "roleList",
+      where: "id = ?",
+      whereArgs: [id],
+    );
+    return maps[0]['name'];
+  }
+
+
 }
 
 //TODO saved & recent booleans in datenbank integrieren
