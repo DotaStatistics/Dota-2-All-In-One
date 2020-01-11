@@ -31,7 +31,7 @@ class ProfilePieChart extends StatelessWidget {
       showChartValuesOutside: false,
       chartValueBackgroundColor: Colors.grey[200],
       colorList: colorList,
-      showLegends: false,
+      showLegends: true,
       legendPosition: LegendPosition.right,
       legendStyle: FontStyles.whiteText(),
       decimalPlaces: 1,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:dota_stats/models/playerInfo.dart';
 import 'KDA.dart';
+import 'package:dota_stats/styles/fontStyles.dart';
 
 class Review extends StatelessWidget{
   final PlayerInfo info;
@@ -39,7 +40,13 @@ class Review extends StatelessWidget{
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-          KDA(kills(info.matches), deaths(info.matches), assists(info.matches)),
+          Column(
+            children: <Widget>[
+              Text("KDA Summary",
+              style: FontStyles.whiteText()),
+              KDA(kills(info.matches), deaths(info.matches), assists(info.matches)),
+            ],
+          ),
           ProfilePieChart(info.matches.length, winCount(info.matches))
       ],
     );

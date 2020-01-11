@@ -20,6 +20,7 @@ class MatchListItem extends StatefulWidget {
 
 class _MatchListItemState extends State<MatchListItem> {
   DatabaseHelper db = DatabaseHelper.instance;
+
   @override
   void initState() {
     super.initState();
@@ -43,32 +44,44 @@ class _MatchListItemState extends State<MatchListItem> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         child: Container(
-            color: Colors.blueGrey,
-            child: Column(children: <Widget>[
-              Row(children: <Widget>[
-                Text(widget.match.players[0].isVictory ? "WIN" : "LOSS",
-                    style: widget.match.players[0].isVictory
-                        ? FontStyles.win()
-                        : FontStyles.loss()),
-                Text("  " +
-                    DateTime.fromMillisecondsSinceEpoch(
-                            widget.match.startDateTime * 1000)
-                        .toString()
-                        .substring(0, 11) +
-                    " | "),
-                Text(DateTime.fromMillisecondsSinceEpoch(
-                            widget.match.startDateTime * 1000)
-                        .toString()
-                        .substring(11, 16) +
-                    "   "),
-                KDA(
-                    widget.match.players[0].numKills,
-                    widget.match.players[0].numDeaths,
-                    widget.match.players[0].numAssists),
-                Text(widget.role),
-                Text(widget.gameMode)
-              ]),
-              PurchasedItemsList(widget.match.players[0]),
-            ])));
+            decoration: BoxDecoration(
+                border: Border(
+              bottom: BorderSide(color: Colors.white70, width: 1.0),
+            )),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(children: <Widget>[
+                    Text(widget.match.players[0].isVictory ? "WIN" : "LOSS",
+                        style: widget.match.players[0].isVictory
+                            ? FontStyles.win()
+                            : FontStyles.loss()),
+                    KDA(
+                        widget.match.players[0].numKills,
+                        widget.match.players[0].numDeaths,
+                        widget.match.players[0].numAssists),
+                  ]),
+                  Column(children: <Widget>[
+                    Row(children: <Widget>[
+                      Text(
+                          "  " +
+                              DateTime.fromMillisecondsSinceEpoch(
+                                      widget.match.startDateTime * 1000)
+                                  .toString()
+                                  .substring(0, 11) +
+                              " | " +
+                              DateTime.fromMillisecondsSinceEpoch(
+                                      widget.match.startDateTime * 1000)
+                                  .toString()
+                                  .substring(11, 16) +
+                              "   " +
+                              widget.role +
+                              " | " +
+                              widget.gameMode,
+                          style: FontStyles.whiteText())
+                    ]),
+                    PurchasedItemsList(widget.match.players[0])
+                  ])
+                ])));
   }
 }

@@ -17,9 +17,9 @@ class BasicProfileInfo extends StatelessWidget {
       Column(
         children: <Widget>[
           Text("Games",
-          style: FontStyles.redText()),
+          style: FontStyles.whiteTextBold()),
           Text(playerDetails.matchCount.toString(),
-          style: FontStyles.whiteText()),
+              style: FontStyles.whiteText()),
         ],
       ),
       Column(
@@ -30,6 +30,14 @@ class BasicProfileInfo extends StatelessWidget {
           style: FontStyles.whiteText())
         ],
       ),
+          Column(
+            children: <Widget>[
+              Text("Losses",
+                  style: FontStyles.redText()),
+              Text((playerDetails.matchCount - playerDetails.winCount).toString(),
+                  style: FontStyles.whiteText())
+            ],
+          ),
       Column(
         children: <Widget>[
           Text("Winrate"),

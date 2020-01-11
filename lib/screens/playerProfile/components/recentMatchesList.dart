@@ -53,9 +53,11 @@ class _RecentMatchesListState extends State<RecentMatchesList> {
                       },
                       child: MatchListItem(
                           widget.matches[int],
+                          widget.matches[int].players[0].role != null ?
                           snapshot
                               .data["roles"][widget.matches[int].players[0].role]
-                              .name,
+                              .name
+                          : "No Role",
                           snapshot.data["gameModes"][widget.matches[int].gameMode]
                               .name),
                     );

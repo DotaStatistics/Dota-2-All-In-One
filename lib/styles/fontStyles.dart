@@ -27,6 +27,13 @@ class FontStyles {
     );
   }
 
+  static TextStyle whiteTextBold(){
+    return TextStyle (
+      color: Colors.white70,
+      fontWeight: FontWeight.bold
+    );
+  }
+
   static TextStyle whiteTextHeader(){
     return TextStyle (
       color: Colors.white70,

@@ -40,25 +40,22 @@ class _PlayerOverviewState extends State<PlayerOverview>{
         if(snapshot.connectionState == ConnectionState.done){
           return Center(
               child: Container(
-            height: 60.0,
+            height: 70.0,
             child:
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text("Name: " + snapshot.data,
+                  style: FontStyles.whiteText()),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Name: " + snapshot.data,
-                  style: FontStyles.whiteText()),
                   Text("   KDA:",
                   style: FontStyles.whiteText()),
-                  Container(
-                    child:
-                  KDA(widget.player.numKills, widget.player.numDeaths, widget.player.numAssists)),
-                  Text("  "),
-                  Text("Role: ",
+                  KDA(widget.player.numKills, widget.player.numDeaths, widget.player.numAssists),
+                  Text("  Role: ",
                   style: FontStyles.whiteText()),
                   Text(widget.roles[widget.player.role].name,
                   style: FontStyles.whiteText())
