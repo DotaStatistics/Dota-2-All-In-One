@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
   static const String routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    initiateLists();
+    //initiateLists();
         return Scaffold(
           appBar: AppBar(
             title: Text("home"),
@@ -22,16 +22,17 @@ class Home extends StatelessWidget {
   }
 }
 
-void initiateLists(){
+void initiateLists() async {
+  Future.wait([
   fetchItemList().then((result){
     List<DBItem> itemList = List();
     result.forEach((k,v) => itemList.add(DBItem.fromAPI(v)));
     DatabaseHelper.instance.fillItemTable(itemList);
-  });
+  }),
   fetchGameModeList().then((result){
-   DatabaseHelper.instance.fillGameModeTable(result.entries.map((e) => e.value).toList());
-  });
+    DatabaseHelper.instance.fillGameModeTable(result.entries.map((e) => e.value).toList());
+  }),
   fetchRoleList().then((result){
-    DatabaseHelper.instance.fillRoleTable(result);
-  });
+    DatabaseHelper.instance.fillRoleTable(result);})
+  ]);
 }

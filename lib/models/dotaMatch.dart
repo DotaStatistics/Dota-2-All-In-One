@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dota_stats/models/matchDetails.dart' as prefix0;
+
 List<DotaMatch> recentMatchesResultsFromJson(String str) => List<DotaMatch>.from(json.decode(str).map((x) => DotaMatch.fromJson(x)));
 
 String recentMatchesResultsToJson(List<DotaMatch> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -250,4 +252,14 @@ class Player {
     "roamLane": roamLane == null ? null : roamLane,
     "backpack0Id": backpack0Id == null ? null : backpack0Id,
   };
+
+  factory Player.fromMatchDetails(prefix0.Player player) => Player(
+    item0Id: player.item0Id,
+    item1Id: player.item1Id,
+    item2Id: player.item2Id,
+    item3Id: player.item3Id,
+    item4Id: player.item4Id,
+    item5Id: player.item5Id
+  );
+
 }

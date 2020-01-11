@@ -27,6 +27,13 @@ class FontStyles {
     );
   }
 
+  static TextStyle whiteTextHeader(){
+    return TextStyle (
+      color: Colors.white70,
+      fontSize: 22.0
+    );
+  }
+
   static TextStyle win(){
     return TextStyle(
       color: Colors.green,

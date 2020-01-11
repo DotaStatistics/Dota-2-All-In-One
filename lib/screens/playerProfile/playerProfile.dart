@@ -18,13 +18,14 @@ class PlayerProfile extends StatefulWidget {
 class _PlayerProfileState extends State<PlayerProfile> {
   Future<PlayerInfo> playerInfo;
   DatabaseHelper db = DatabaseHelper.instance;
-  bool saved;
+  bool saved = false;
 
   @override
   void initState() {
     super.initState();
-    playerInfo = fetchPlayerInfo(widget.steamId);
     initSavedStatus();
+    playerInfo = fetchPlayerInfo(widget.steamId);
+
   }
 
   void initSavedStatus() async {
@@ -83,7 +84,10 @@ class _PlayerProfileState extends State<PlayerProfile> {
           }
           return Scaffold(
               appBar: AppBar(title: Text("Loading Profil Data...")),
-              body: Center(child: CircularProgressIndicator()));
+              body: Container(
+                  color: Theme.of(context).primaryColor,
+                child:Center(child: CircularProgressIndicator()))
+              );
         });
   }
 }

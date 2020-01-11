@@ -7,67 +7,68 @@ import 'KDA.dart';
 
 class MatchListItem extends StatefulWidget {
   final DotaMatch match;
+  final String gameMode;
+  final String role;
 
-  MatchListItem(this.match);
+  MatchListItem(this.match, this.gameMode, this.role);
 
   @override
   _MatchListItemState createState() => _MatchListItemState();
 }
 
-class _MatchListItemState extends State<MatchListItem>{
- String gameMode;
- String role;
- DatabaseHelper db = DatabaseHelper.instance;
+//TODO: implement matchItemInfo as Map
 
- @override
- void initState() {
-   super.initState();
-   fetchData();
- }
-
- fetchData() async {
-   await fetchGameMode(widget.match.gameMode);
-   fetchRole(widget.match.players[0].role);
- }
-
-  Future<void> fetchGameMode(int mode) async {
-    return await db.getGameModeName(mode).then((result){
-      setState((){
-        gameMode = result;
-      });
-    });
-  }
-
-  Future<void> fetchRole(int roleId) async{
-   return await db.getRoleName(roleId).then((result){
-     setState((){
-       role = result;
-     });
-   });
-  }
-  
+class _MatchListItemState extends State<MatchListItem> {
+  DatabaseHelper db = DatabaseHelper.instance;
   @override
-  Widget build(BuildContext context){
-      return Padding(
+  void initState() {
+    super.initState();
+  }
+
+  Future<Map<String, String>> getMatchItemInfo(DotaMatch match) async {
+    Map<String, String> map = Map();
+    Future.wait([
+      DatabaseHelper.instance.getGameModeName(match.gameMode).then((result) {
+        map["gameMode"] = result;
+      }),
+      DatabaseHelper.instance.getRoleName(match.players[0].role).then((result) {
+        map["role"] = result;
+      })
+    ]);
+    return map;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         child: Container(
             color: Colors.blueGrey,
-            child: Column(
-              children: <Widget>[
-                Row(
-                    children: <Widget> [
-                      Text(widget.match.players[0].isVictory ? "WIN" : "LOSS",
-                          style: widget.match.players[0].isVictory ? FontStyles.win() : FontStyles.loss()),
-                      Text("  " + DateTime.fromMillisecondsSinceEpoch(widget.match.startDateTime*1000).toString().substring(0,11) + " | "),
-                      Text(DateTime.fromMillisecondsSinceEpoch(widget.match.startDateTime*1000).toString().substring(11,16) + "   "),
-                      KDA(widget.match.players[0].numKills, widget.match.players[0].numDeaths,widget.match.players[0].numAssists),
-                      gameMode != null ? Text(gameMode) : CircularProgressIndicator(),
-                      role !=null ? Text(role) : CircularProgressIndicator(),
-              ]
-            ),
-                PurchasedItemsList(widget.match.players[0]),
-          ]
-        ))
-      );
+            child: Column(children: <Widget>[
+              Row(children: <Widget>[
+                Text(widget.match.players[0].isVictory ? "WIN" : "LOSS",
+                    style: widget.match.players[0].isVictory
+                        ? FontStyles.win()
+                        : FontStyles.loss()),
+                Text("  " +
+                    DateTime.fromMillisecondsSinceEpoch(
+                            widget.match.startDateTime * 1000)
+                        .toString()
+                        .substring(0, 11) +
+                    " | "),
+                Text(DateTime.fromMillisecondsSinceEpoch(
+                            widget.match.startDateTime * 1000)
+                        .toString()
+                        .substring(11, 16) +
+                    "   "),
+                KDA(
+                    widget.match.players[0].numKills,
+                    widget.match.players[0].numDeaths,
+                    widget.match.players[0].numAssists),
+                Text(widget.role),
+                Text(widget.gameMode)
+              ]),
+              PurchasedItemsList(widget.match.players[0]),
+            ])));
   }
 }

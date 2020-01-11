@@ -51,6 +51,8 @@ class DatabaseHelper {
         });
   }
 
+  Future close() async => DatabaseHelper.instance.close();
+
   Future<bool> isSaved(int id) async {
     final Database db = await DatabaseHelper.instance.database;
     var response =
@@ -81,7 +83,6 @@ class DatabaseHelper {
     // Get a reference to the database.
     final Database db = await DatabaseHelper.instance.database;
 
-    // Query the table for all the saved Profiles
     final List<Map<String, dynamic>> maps = await db.query('savedProfiles');
 
     // Convert the List
@@ -142,6 +143,31 @@ class DatabaseHelper {
     });
   }
 
+  Future<List<GameMode>> getGameModeList() async {
+    final Database db = await DatabaseHelper.instance.database;
+    final List<Map<String, dynamic>> maps = await db.query('gameModeList');
+    return List.generate(maps.length, (i) {
+      return GameMode(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+        langKey: maps[i]['langKey'],
+      );
+    });
+  }
+
+  Future<List<Role>> getRoleList() async {
+    final Database db = await DatabaseHelper.instance.database;
+    final List<Map<String, dynamic>> maps = await db.query('roleList');
+    return List.generate(maps.length, (i) {
+      return Role(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+        langKey: maps[i]['langKey'],
+      );
+    });
+  }
+
+
   Future<String> getGameModeName(int id) async {
     final Database db = await DatabaseHelper.instance.database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -149,6 +175,7 @@ class DatabaseHelper {
       where: "id = ?",
       whereArgs: [id],
     );
+    await DatabaseHelper.instance.close();
     return maps[0]['name'];
   }
 
@@ -171,6 +198,7 @@ class DatabaseHelper {
       where: "id = ?",
       whereArgs: [id],
     );
+    await DatabaseHelper.instance.close();
     return maps[0]['name'];
   }
 

@@ -8,6 +8,8 @@ import 'package:dota_stats/models/playerDetails.dart';
 import 'package:dota_stats/models/dotaMatch.dart';
 import 'package:dota_stats/models/playerInfo.dart';
 import 'models/item.dart';
+import 'models/matchDetails.dart';
+
 const playerSearch = 'https://api.stratz.com/api/v1/search/player?q=';
 
 
@@ -97,3 +99,18 @@ Future<List<Role>> fetchRoleList() async {
     throw Exception('Failed to load roles');
   }
 }
+
+Future<MatchDetails> fetchMatchDetails(int id) async {
+  final response=
+  await http.get('https://api.stratz.com/api/v1/match?matchId=' + id.toString());
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    return matchDetailsFromJson(response.body);
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load MatchDetails');
+  }
+}
+
+
