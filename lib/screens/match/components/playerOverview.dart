@@ -23,32 +23,36 @@ class PlayerOverview extends StatefulWidget {
 }
 
 class _PlayerOverviewState extends State<PlayerOverview>{
-  Future<PlayerInfo> playerModel;
+  Future<String> playerName;
 
   @override
   void initState() {
     super.initState();
-    playerModel = fetchPlayerInfo(widget.player.steamId.toString());
+    playerName = fetchPlayerNameFromId(widget.player.steamId);
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: playerModel,
+    return FutureBuilder<String>(
+      future: playerName,
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.done){
-          return Container(
-            height: 50.0,
+          return Center(
+              child: Container(
+            height: 60.0,
             child:
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  //Text("Name: " + snapshot.data.details.steamAccount.name),
-                  Text("   "),
-                  Text("KDA: ",
+                  Text("Name: " + snapshot.data,
+                  style: FontStyles.whiteText()),
+                  Text("   KDA:",
                   style: FontStyles.whiteText()),
                   Container(
                     child:
@@ -62,7 +66,7 @@ class _PlayerOverviewState extends State<PlayerOverview>{
               ),
               PurchasedItemsList(prefix2.Player.fromMatchDetails(widget.player))
             ],
-          ));
+          )));
         }
         return Container(
           width: 10.0,

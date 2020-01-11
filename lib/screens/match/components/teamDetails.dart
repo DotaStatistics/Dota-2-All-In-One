@@ -11,13 +11,14 @@ class TeamDetails extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Expanded(
-      child:
-    ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: players.length,
-      itemBuilder: (context, int){
-        return PlayerOverview(players[int], roles);
-      }
-    ));
+
+        child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: players.length,
+            itemBuilder: (context, int){
+              return PlayerOverview(players[int], roles);
+            }
+        )
+    );
   }
 }

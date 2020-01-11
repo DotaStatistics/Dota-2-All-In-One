@@ -44,29 +44,41 @@ class TeamOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Row(
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text("Radiant: ", style: FontStyles.whiteText()),
-          Text(radiantKills(matchDetails.players).toString(),
-              style: FontStyles.greenText()),
-          Text("/", style: FontStyles.whiteText()),
-          Text(radiantDeaths(matchDetails.players).toString(),
-              style: FontStyles.redText()),
-          Text("/" + radiantAssists(matchDetails.players).toString(),
-              style: FontStyles.whiteText()),
-        ],
-      ),
-      Row(children: <Widget>[
-        Text("Dire: ", style: FontStyles.whiteText()),
-        Text(direKills(matchDetails.players).toString(),
-            style: FontStyles.greenText()),
-        Text("/", style: FontStyles.whiteText()),
-        Text(direDeaths(matchDetails.players).toString(),
-            style: FontStyles.redText()),
-        Text("/" + direAssists(matchDetails.players).toString(),
-            style: FontStyles.whiteText()),
-      ]),
-    ]);
+          Column(
+            children: <Widget>[
+              Text("Radiant KDA", style: FontStyles.whiteText()),
+              Row(
+                children: <Widget>[
+                  Text(radiantKills(matchDetails.players).toString(),
+                      style: FontStyles.greenText()),
+                  Text("/", style: FontStyles.whiteText()),
+                  Text(radiantDeaths(matchDetails.players).toString(),
+                      style: FontStyles.redText()),
+                  Text("/" + radiantAssists(matchDetails.players).toString(),
+                      style: FontStyles.whiteText()),
+                ],
+              )
+
+            ],
+          ),
+          Column(children: <Widget>[
+            Text("Dire KDA", style: FontStyles.whiteText()),
+            Row(
+              children: <Widget>[
+                Text(direKills(matchDetails.players).toString(),
+                    style: FontStyles.greenText()),
+                Text("/", style: FontStyles.whiteText()),
+                Text(direDeaths(matchDetails.players).toString(),
+                    style: FontStyles.redText()),
+                Text("/" + direAssists(matchDetails.players).toString(),
+                    style: FontStyles.whiteText()),
+              ],
+            )
+
+          ]),
+        ]);
   }
 }

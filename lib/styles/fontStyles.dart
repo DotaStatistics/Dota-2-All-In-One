@@ -34,6 +34,13 @@ class FontStyles {
     );
   }
 
+  static TextStyle appBarMatchDetails(){
+    return TextStyle (
+        color: Colors.white70,
+        fontSize: 15.0
+    );
+  }
+
   static TextStyle win(){
     return TextStyle(
       color: Colors.green,

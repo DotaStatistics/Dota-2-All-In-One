@@ -114,3 +114,16 @@ Future<MatchDetails> fetchMatchDetails(int id) async {
 }
 
 
+Future<String> fetchPlayerNameFromId(int id) async {
+  final response =
+  await http.get('https://api.stratz.com/api/v1/Player/' + id.toString());
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    var parsedJson = json.decode(response.body);
+    return parsedJson["steamAccount"]["name"];
+  }
+  else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load MatchDetails');
+  }
+}
