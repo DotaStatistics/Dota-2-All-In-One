@@ -5,6 +5,7 @@ import 'savedPlayerListItem.dart';
 
 class SavedPlayersList extends StatefulWidget {
   SavedPlayersList();
+
   @override
   _SavedPlayersState createState() => _SavedPlayersState();
 }

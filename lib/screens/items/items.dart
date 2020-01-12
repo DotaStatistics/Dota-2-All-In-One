@@ -5,10 +5,11 @@ import "dart:convert";
 import 'package:dota_stats/drawer.dart';
 import 'package:dota_stats/screens/itemDetails/itemDetails.dart';
 
-
 class ItemScreen extends StatefulWidget {
   static const String routeName = '/items';
+
   ItemScreen();
+
   @override
   ItemState createState() => new ItemState();
 }
@@ -16,7 +17,6 @@ class ItemScreen extends StatefulWidget {
 class ItemState extends State<ItemScreen> {
   final String url = "https://api.stratz.com/api/v1/Item";
   Map<String, dynamic> data = new Map();
-
 
   @override
   void initState() {
@@ -30,11 +30,10 @@ class ItemState extends State<ItemScreen> {
     print(response.body);
 
     setState(() {
-      data =  json.decode(response.body);
+      data = json.decode(response.body);
     });
     return "Success";
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +46,12 @@ class ItemState extends State<ItemScreen> {
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) {
             String itemKey = data.keys.elementAt(index);
-              return InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ItemDetailsScreen(data, itemKey);
-                  }));
-                  },
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ItemDetailsScreen(data, itemKey);
+                }));
+              },
               child: new Center(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,29 +65,24 @@ class ItemState extends State<ItemScreen> {
         ));
   }
 
-  Card getCard(String itemKey, int index){
+  Card getCard(String itemKey, int index) {
     return Card(
-                        child: Row(
-                            children: <Widget> [
-                              CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      data[itemKey]["image"] != null ?
-                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
-                                      "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png"
-                                  )
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 16.0)),
-                              new Text( data[itemKey]["displayName"] == null ?
-                                  data[itemKey]["language"]["displayName"]:
-                              data[itemKey]["displayName"],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                ),
-                              ),
-
-                            ]
-                        )
-                    );
+        child: Row(children: <Widget>[
+      CircleAvatar(
+          backgroundImage: NetworkImage(data[itemKey]["image"] != null
+              ? "http://cdn.dota2.com/apps/dota2/images/items/" +
+                  data[itemKey]["image"]
+              : "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png")),
+      Padding(padding: EdgeInsets.only(left: 16.0)),
+      new Text(
+        data[itemKey]["displayName"] == null
+            ? data[itemKey]["language"]["displayName"]
+            : data[itemKey]["displayName"],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
+      ),
+    ]));
   }
 }

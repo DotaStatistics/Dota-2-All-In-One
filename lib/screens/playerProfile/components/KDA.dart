@@ -12,18 +12,12 @@ class KDA extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Text(kills.toString(),
-        style: FontStyles.greenText()),
-        Text("/",
-        style: FontStyles.whiteText()),
-        Text(deaths.toString(),
-        style: FontStyles.redText()),
-        Text("/",
-        style: FontStyles.whiteText()),
-        Text(assists.toString(),
-        style: FontStyles.yellowText()),
+        Text(kills.toString(), style: FontStyles.greenText()),
+        Text("/", style: FontStyles.whiteText()),
+        Text(deaths.toString(), style: FontStyles.redText()),
+        Text("/", style: FontStyles.whiteText()),
+        Text(assists.toString(), style: FontStyles.yellowText()),
       ],
     );
-
   }
 }

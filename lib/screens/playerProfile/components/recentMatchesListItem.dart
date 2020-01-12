@@ -44,8 +44,8 @@ class _MatchListItemState extends State<MatchListItem> {
         child: Container(
             decoration: BoxDecoration(
                 border: Border(
-              bottom: BorderSide(color: Colors.white70, width: 1.0),
-            )),
+                  bottom: BorderSide(color: Colors.white70, width: 1.0),
+                )),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -64,12 +64,12 @@ class _MatchListItemState extends State<MatchListItem> {
                       Text(
                           "  " +
                               DateTime.fromMillisecondsSinceEpoch(
-                                      widget.match.startDateTime * 1000)
+                                  widget.match.startDateTime * 1000)
                                   .toString()
                                   .substring(0, 11) +
                               " | " +
                               DateTime.fromMillisecondsSinceEpoch(
-                                      widget.match.startDateTime * 1000)
+                                  widget.match.startDateTime * 1000)
                                   .toString()
                                   .substring(11, 16) +
                               "   " +

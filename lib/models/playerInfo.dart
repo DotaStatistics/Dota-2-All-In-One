@@ -5,5 +5,6 @@ import 'dotaMatch.dart';
 class PlayerInfo {
   PlayerDetails details;
   List<DotaMatch> matches;
+
   PlayerInfo(this.details, this.matches);
 }

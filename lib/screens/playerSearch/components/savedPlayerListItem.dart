@@ -3,6 +3,7 @@ import 'package:dota_stats/database.dart';
 
 class SavedPlayerListItem extends StatefulWidget {
   final DBPlayer player;
+
   SavedPlayerListItem(this.player);
 
   _SavedPlayerListItemState createState() => _SavedPlayerListItemState();

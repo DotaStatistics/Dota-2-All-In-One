@@ -6,38 +6,34 @@ import 'profilePieChart.dart';
 
 class BasicProfileInfo extends StatelessWidget {
   final PlayerDetails playerDetails;
+
   BasicProfileInfo(this.playerDetails);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <
+        Widget>[
       ProfilePic(playerDetails.steamAccount.avatar),
       Column(
         children: <Widget>[
-          Text("Games",
-          style: FontStyles.whiteTextBold()),
+          Text("Games", style: FontStyles.whiteTextBold()),
           Text(playerDetails.matchCount.toString(),
               style: FontStyles.whiteText()),
         ],
       ),
       Column(
         children: <Widget>[
-          Text("Wins",
-          style: FontStyles.greenText()),
-          Text(playerDetails.winCount.toString(),
-          style: FontStyles.whiteText())
+          Text("Wins", style: FontStyles.greenText()),
+          Text(playerDetails.winCount.toString(), style: FontStyles.whiteText())
         ],
       ),
-          Column(
-            children: <Widget>[
-              Text("Losses",
-                  style: FontStyles.redText()),
-              Text((playerDetails.matchCount - playerDetails.winCount).toString(),
-                  style: FontStyles.whiteText())
-            ],
-          ),
+      Column(
+        children: <Widget>[
+          Text("Losses", style: FontStyles.redText()),
+          Text((playerDetails.matchCount - playerDetails.winCount).toString(),
+              style: FontStyles.whiteText())
+        ],
+      ),
       Column(
         children: <Widget>[
           Text("Winrate"),
@@ -53,6 +49,7 @@ class BasicProfileInfo extends StatelessWidget {
 
 class ProfilePic extends StatelessWidget {
   final String avatar;
+
   ProfilePic(this.avatar);
 
   @override

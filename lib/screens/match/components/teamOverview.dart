@@ -4,6 +4,7 @@ import 'package:dota_stats/styles/fontStyles.dart';
 
 class TeamOverview extends StatelessWidget {
   final MatchDetails matchDetails;
+
   TeamOverview(this.matchDetails);
 
   int radiantKills(List<Player> players) {
@@ -61,7 +62,6 @@ class TeamOverview extends StatelessWidget {
                       style: FontStyles.whiteText()),
                 ],
               )
-
             ],
           ),
           Column(children: <Widget>[
@@ -77,7 +77,6 @@ class TeamOverview extends StatelessWidget {
                     style: FontStyles.whiteText()),
               ],
             )
-
           ]),
         ]);
   }

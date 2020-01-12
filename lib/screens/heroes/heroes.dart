@@ -5,10 +5,11 @@ import "dart:convert";
 import 'package:dota_stats/drawer.dart';
 import 'package:dota_stats/screens/heroDetails/heroDetails.dart';
 
-
 class HeroScreen extends StatefulWidget {
   static const String routeName = '/heroes';
+
   HeroScreen();
+
   @override
   HeroState createState() => new HeroState();
 }
@@ -18,14 +19,11 @@ class HeroState extends State<HeroScreen> {
   Map<String, dynamic> data = new Map();
   Map<String, dynamic> dataAbilities = new Map();
 
-
-
   @override
   void initState() {
     super.initState();
     this.getJsonData();
     this.getJsonData2();
-
   }
 
   Future<dynamic> getJsonData() async {
@@ -34,7 +32,7 @@ class HeroState extends State<HeroScreen> {
     print(response.body);
 
     setState(() {
-      data =  json.decode(response.body);
+      data = json.decode(response.body);
     });
     return "Success";
   }
@@ -45,11 +43,10 @@ class HeroState extends State<HeroScreen> {
     print(response.body);
 
     setState(() {
-      dataAbilities =  json.decode(response.body);
+      dataAbilities = json.decode(response.body);
     });
     return "Success";
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +63,8 @@ class HeroState extends State<HeroScreen> {
             return InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HeroDetailsScreen(data, itemKey, dataAbilities, itemKeyAbilities);
+                  return HeroDetailsScreen(
+                      data, itemKey, dataAbilities, itemKeyAbilities);
                 }));
               },
               child: new Center(
@@ -82,24 +80,22 @@ class HeroState extends State<HeroScreen> {
         ));
   }
 
-  Card getCard(String itemKey, int index){
+  Card getCard(String itemKey, int index) {
     return Card(
-        child: Row(
-            children: <Widget> [
-              CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png"
-                  )
-              ),
-              Padding(padding: EdgeInsets.only(left: 16.0)),
-              new Text( data[itemKey]["displayName"],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-              ),
-            ]
-        )
-    );
+        child: Row(children: <Widget>[
+      CircleAvatar(
+          backgroundImage: NetworkImage(
+              "http://cdn.dota2.com/apps/dota2/images/heroes/" +
+                  data[itemKey]["shortName"] +
+                  "_full.png")),
+      Padding(padding: EdgeInsets.only(left: 16.0)),
+      new Text(
+        data[itemKey]["displayName"],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
+      ),
+    ]));
   }
 }

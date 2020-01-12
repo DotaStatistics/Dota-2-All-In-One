@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-PlayerDetails playerDetailsResultsFromJson(String str) => PlayerDetails.fromJson(json.decode(str));
+PlayerDetails playerDetailsResultsFromJson(String str) =>
+    PlayerDetails.fromJson(json.decode(str));
 
-String playerDetailsResultsToJson(PlayerDetails data) => json.encode(data.toJson());
+String playerDetailsResultsToJson(PlayerDetails data) =>
+    json.encode(data.toJson());
 
 class PlayerDetails {
   SteamAccount steamAccount;
@@ -36,36 +38,61 @@ class PlayerDetails {
   });
 
   factory PlayerDetails.fromJson(Map<String, dynamic> json) => PlayerDetails(
-    steamAccount: json["steamAccount"] == null ? null : SteamAccount.fromJson(json["steamAccount"]),
-    battlePass: json["battlePass"] == null ? null : List<BattlePass>.from(json["battlePass"].map((x) => BattlePass.fromJson(x))),
-    date: json["date"] == null ? null : json["date"],
-    badges: json["badges"] == null ? null : List<dynamic>.from(json["badges"].map((x) => x)),
-    lastRegionId: json["lastRegionId"] == null ? null : json["lastRegionId"],
-    ranks: json["ranks"] == null ? null : List<Rank>.from(json["ranks"].map((x) => Rank.fromJson(x))),
-    languageCode: json["languageCode"] == null ? null : List<String>.from(json["languageCode"].map((x) => x)),
-    firstMatchDate: json["firstMatchDate"] == null ? null : json["firstMatchDate"],
-    matchCount: json["matchCount"] == null ? null : json["matchCount"],
-    winCount: json["winCount"] == null ? null : json["winCount"],
-    names: json["names"] == null ? null : List<Name>.from(json["names"].map((x) => Name.fromJson(x))),
-    team: json["team"] == null ? null : TeamElement.fromJson(json["team"]),
-    behaviorScore: json["behaviorScore"] == null ? null : json["behaviorScore"],
-  );
+        steamAccount: json["steamAccount"] == null
+            ? null
+            : SteamAccount.fromJson(json["steamAccount"]),
+        battlePass: json["battlePass"] == null
+            ? null
+            : List<BattlePass>.from(
+                json["battlePass"].map((x) => BattlePass.fromJson(x))),
+        date: json["date"] == null ? null : json["date"],
+        badges: json["badges"] == null
+            ? null
+            : List<dynamic>.from(json["badges"].map((x) => x)),
+        lastRegionId:
+            json["lastRegionId"] == null ? null : json["lastRegionId"],
+        ranks: json["ranks"] == null
+            ? null
+            : List<Rank>.from(json["ranks"].map((x) => Rank.fromJson(x))),
+        languageCode: json["languageCode"] == null
+            ? null
+            : List<String>.from(json["languageCode"].map((x) => x)),
+        firstMatchDate:
+            json["firstMatchDate"] == null ? null : json["firstMatchDate"],
+        matchCount: json["matchCount"] == null ? null : json["matchCount"],
+        winCount: json["winCount"] == null ? null : json["winCount"],
+        names: json["names"] == null
+            ? null
+            : List<Name>.from(json["names"].map((x) => Name.fromJson(x))),
+        team: json["team"] == null ? null : TeamElement.fromJson(json["team"]),
+        behaviorScore:
+            json["behaviorScore"] == null ? null : json["behaviorScore"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "steamAccount": steamAccount == null ? null : steamAccount.toJson(),
-    "battlePass": battlePass == null ? null : List<dynamic>.from(battlePass.map((x) => x.toJson())),
-    "date": date == null ? null : date,
-    "badges": badges == null ? null : List<dynamic>.from(badges.map((x) => x)),
-    "lastRegionId": lastRegionId == null ? null : lastRegionId,
-    "ranks": ranks == null ? null : List<dynamic>.from(ranks.map((x) => x.toJson())),
-    "languageCode": languageCode == null ? null : List<dynamic>.from(languageCode.map((x) => x)),
-    "firstMatchDate": firstMatchDate == null ? null : firstMatchDate,
-    "matchCount": matchCount == null ? null : matchCount,
-    "winCount": winCount == null ? null : winCount,
-    "names": names == null ? null : List<dynamic>.from(names.map((x) => x.toJson())),
-    "team": team == null ? null : team.toJson(),
-    "behaviorScore": behaviorScore == null ? null : behaviorScore,
-  };
+        "steamAccount": steamAccount == null ? null : steamAccount.toJson(),
+        "battlePass": battlePass == null
+            ? null
+            : List<dynamic>.from(battlePass.map((x) => x.toJson())),
+        "date": date == null ? null : date,
+        "badges":
+            badges == null ? null : List<dynamic>.from(badges.map((x) => x)),
+        "lastRegionId": lastRegionId == null ? null : lastRegionId,
+        "ranks": ranks == null
+            ? null
+            : List<dynamic>.from(ranks.map((x) => x.toJson())),
+        "languageCode": languageCode == null
+            ? null
+            : List<dynamic>.from(languageCode.map((x) => x)),
+        "firstMatchDate": firstMatchDate == null ? null : firstMatchDate,
+        "matchCount": matchCount == null ? null : matchCount,
+        "winCount": winCount == null ? null : winCount,
+        "names": names == null
+            ? null
+            : List<dynamic>.from(names.map((x) => x.toJson())),
+        "team": team == null ? null : team.toJson(),
+        "behaviorScore": behaviorScore == null ? null : behaviorScore,
+      };
 }
 
 class BattlePass {
@@ -78,14 +105,14 @@ class BattlePass {
   });
 
   factory BattlePass.fromJson(Map<String, dynamic> json) => BattlePass(
-    eventId: json["eventId"] == null ? null : json["eventId"],
-    level: json["level"] == null ? null : json["level"],
-  );
+        eventId: json["eventId"] == null ? null : json["eventId"],
+        level: json["level"] == null ? null : json["level"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "eventId": eventId == null ? null : eventId,
-    "level": level == null ? null : level,
-  };
+        "eventId": eventId == null ? null : eventId,
+        "level": level == null ? null : level,
+      };
 }
 
 class Name {
@@ -98,14 +125,15 @@ class Name {
   });
 
   factory Name.fromJson(Map<String, dynamic> json) => Name(
-    name: json["name"] == null ? null : json["name"],
-    lastSeenDateTime: json["lastSeenDateTime"] == null ? null : json["lastSeenDateTime"],
-  );
+        name: json["name"] == null ? null : json["name"],
+        lastSeenDateTime:
+            json["lastSeenDateTime"] == null ? null : json["lastSeenDateTime"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "name": name == null ? null : name,
-    "lastSeenDateTime": lastSeenDateTime == null ? null : lastSeenDateTime,
-  };
+        "name": name == null ? null : name,
+        "lastSeenDateTime": lastSeenDateTime == null ? null : lastSeenDateTime,
+      };
 }
 
 class Rank {
@@ -120,16 +148,20 @@ class Rank {
   });
 
   factory Rank.fromJson(Map<String, dynamic> json) => Rank(
-    seasonRankId: json["seasonRankId"] == null ? null : json["seasonRankId"],
-    asOfDateTime: json["asOfDateTime"] == null ? null : DateTime.parse(json["asOfDateTime"].toString().substring(0,19)),
-    rank: json["rank"] == null ? null : json["rank"],
-  );
+        seasonRankId:
+            json["seasonRankId"] == null ? null : json["seasonRankId"],
+        asOfDateTime: json["asOfDateTime"] == null
+            ? null
+            : DateTime.parse(json["asOfDateTime"].toString().substring(0, 19)),
+        rank: json["rank"] == null ? null : json["rank"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "seasonRankId": seasonRankId == null ? null : seasonRankId,
-    "asOfDateTime": asOfDateTime == null ? null : asOfDateTime.toIso8601String(),
-    "rank": rank == null ? null : rank,
-  };
+        "seasonRankId": seasonRankId == null ? null : seasonRankId,
+        "asOfDateTime":
+            asOfDateTime == null ? null : asOfDateTime.toIso8601String(),
+        "rank": rank == null ? null : rank,
+      };
 }
 
 class SteamAccount {
@@ -184,56 +216,78 @@ class SteamAccount {
   });
 
   factory SteamAccount.fromJson(Map<String, dynamic> json) => SteamAccount(
-    id: json["id"] == null ? null : json["id"],
-    profileUri: json["profileUri"] == null ? null : json["profileUri"],
-    timeCreated: json["timeCreated"] == null ? null : json["timeCreated"],
-    cityId: json["cityId"] == null ? null : json["cityId"],
-    communityVisibleState: json["communityVisibleState"] == null ? null : json["communityVisibleState"],
-    name: json["name"] == null ? null : json["name"],
-    lastLogOff: json["lastLogOff"] == null ? null : json["lastLogOff"],
-    avatar: json["avatar"] == null ? null : json["avatar"],
-    primaryClanId: json["primaryClanId"] == null ? null : json["primaryClanId"].toDouble(),
-    soloRank: json["soloRank"] == null ? null : json["soloRank"],
-    partyRank: json["partyRank"] == null ? null : json["partyRank"],
-    isDotaPlusSubscriber: json["isDotaPlusSubscriber"] == null ? null : json["isDotaPlusSubscriber"],
-    dotaPlusOriginalStartDate: json["dotaPlusOriginalStartDate"] == null ? null : json["dotaPlusOriginalStartDate"],
-    isAnonymous: json["isAnonymous"] == null ? null : json["isAnonymous"],
-    isStratzAnonymous: json["isStratzAnonymous"] == null ? null : json["isStratzAnonymous"],
-    seasonRank: json["seasonRank"] == null ? null : json["seasonRank"],
-    smurfFlag: json["smurfFlag"] == null ? null : json["smurfFlag"],
-    smurfCheckDate: json["smurfCheckDate"] == null ? null : json["smurfCheckDate"],
-    lastMatchDateTime: json["lastMatchDateTime"] == null ? null : json["lastMatchDateTime"],
-    lastMatchRegionId: json["lastMatchRegionId"] == null ? null : json["lastMatchRegionId"],
-    countryCode: json["countryCode"] == null ? null : json["countryCode"],
-    stateCode: json["stateCode"] == null ? null : json["stateCode"],
-    realName: json["realName"] == null ? null : json["realName"],
-  );
+        id: json["id"] == null ? null : json["id"],
+        profileUri: json["profileUri"] == null ? null : json["profileUri"],
+        timeCreated: json["timeCreated"] == null ? null : json["timeCreated"],
+        cityId: json["cityId"] == null ? null : json["cityId"],
+        communityVisibleState: json["communityVisibleState"] == null
+            ? null
+            : json["communityVisibleState"],
+        name: json["name"] == null ? null : json["name"],
+        lastLogOff: json["lastLogOff"] == null ? null : json["lastLogOff"],
+        avatar: json["avatar"] == null ? null : json["avatar"],
+        primaryClanId: json["primaryClanId"] == null
+            ? null
+            : json["primaryClanId"].toDouble(),
+        soloRank: json["soloRank"] == null ? null : json["soloRank"],
+        partyRank: json["partyRank"] == null ? null : json["partyRank"],
+        isDotaPlusSubscriber: json["isDotaPlusSubscriber"] == null
+            ? null
+            : json["isDotaPlusSubscriber"],
+        dotaPlusOriginalStartDate: json["dotaPlusOriginalStartDate"] == null
+            ? null
+            : json["dotaPlusOriginalStartDate"],
+        isAnonymous: json["isAnonymous"] == null ? null : json["isAnonymous"],
+        isStratzAnonymous: json["isStratzAnonymous"] == null
+            ? null
+            : json["isStratzAnonymous"],
+        seasonRank: json["seasonRank"] == null ? null : json["seasonRank"],
+        smurfFlag: json["smurfFlag"] == null ? null : json["smurfFlag"],
+        smurfCheckDate:
+            json["smurfCheckDate"] == null ? null : json["smurfCheckDate"],
+        lastMatchDateTime: json["lastMatchDateTime"] == null
+            ? null
+            : json["lastMatchDateTime"],
+        lastMatchRegionId: json["lastMatchRegionId"] == null
+            ? null
+            : json["lastMatchRegionId"],
+        countryCode: json["countryCode"] == null ? null : json["countryCode"],
+        stateCode: json["stateCode"] == null ? null : json["stateCode"],
+        realName: json["realName"] == null ? null : json["realName"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "profileUri": profileUri == null ? null : profileUri,
-    "timeCreated": timeCreated == null ? null : timeCreated,
-    "cityId": cityId == null ? null : cityId,
-    "communityVisibleState": communityVisibleState == null ? null : communityVisibleState,
-    "name": name == null ? null : name,
-    "lastLogOff": lastLogOff == null ? null : lastLogOff,
-    "avatar": avatar == null ? null : avatar,
-    "primaryClanId": primaryClanId == null ? null : primaryClanId,
-    "soloRank": soloRank == null ? null : soloRank,
-    "partyRank": partyRank == null ? null : partyRank,
-    "isDotaPlusSubscriber": isDotaPlusSubscriber == null ? null : isDotaPlusSubscriber,
-    "dotaPlusOriginalStartDate": dotaPlusOriginalStartDate == null ? null : dotaPlusOriginalStartDate,
-    "isAnonymous": isAnonymous == null ? null : isAnonymous,
-    "isStratzAnonymous": isStratzAnonymous == null ? null : isStratzAnonymous,
-    "seasonRank": seasonRank == null ? null : seasonRank,
-    "smurfFlag": smurfFlag == null ? null : smurfFlag,
-    "smurfCheckDate": smurfCheckDate == null ? null : smurfCheckDate,
-    "lastMatchDateTime": lastMatchDateTime == null ? null : lastMatchDateTime,
-    "lastMatchRegionId": lastMatchRegionId == null ? null : lastMatchRegionId,
-    "countryCode": countryCode == null ? null : countryCode,
-    "stateCode": stateCode == null ? null : stateCode,
-    "realName": realName == null ? null : realName,
-  };
+        "id": id == null ? null : id,
+        "profileUri": profileUri == null ? null : profileUri,
+        "timeCreated": timeCreated == null ? null : timeCreated,
+        "cityId": cityId == null ? null : cityId,
+        "communityVisibleState":
+            communityVisibleState == null ? null : communityVisibleState,
+        "name": name == null ? null : name,
+        "lastLogOff": lastLogOff == null ? null : lastLogOff,
+        "avatar": avatar == null ? null : avatar,
+        "primaryClanId": primaryClanId == null ? null : primaryClanId,
+        "soloRank": soloRank == null ? null : soloRank,
+        "partyRank": partyRank == null ? null : partyRank,
+        "isDotaPlusSubscriber":
+            isDotaPlusSubscriber == null ? null : isDotaPlusSubscriber,
+        "dotaPlusOriginalStartDate": dotaPlusOriginalStartDate == null
+            ? null
+            : dotaPlusOriginalStartDate,
+        "isAnonymous": isAnonymous == null ? null : isAnonymous,
+        "isStratzAnonymous":
+            isStratzAnonymous == null ? null : isStratzAnonymous,
+        "seasonRank": seasonRank == null ? null : seasonRank,
+        "smurfFlag": smurfFlag == null ? null : smurfFlag,
+        "smurfCheckDate": smurfCheckDate == null ? null : smurfCheckDate,
+        "lastMatchDateTime":
+            lastMatchDateTime == null ? null : lastMatchDateTime,
+        "lastMatchRegionId":
+            lastMatchRegionId == null ? null : lastMatchRegionId,
+        "countryCode": countryCode == null ? null : countryCode,
+        "stateCode": stateCode == null ? null : stateCode,
+        "realName": realName == null ? null : realName,
+      };
 }
 
 class MemberTeam {
@@ -258,26 +312,34 @@ class MemberTeam {
   });
 
   factory MemberTeam.fromJson(Map<String, dynamic> json) => MemberTeam(
-    members: json["members"] == null ? null : List<TeamElement>.from(json["members"].map((x) => TeamElement.fromJson(x))),
-    id: json["id"] == null ? null : json["id"],
-    name: json["name"] == null ? null : json["name"],
-    winCount: json["winCount"] == null ? null : json["winCount"],
-    lossCount: json["lossCount"] == null ? null : json["lossCount"],
-    lastMatchDateTime: json["lastMatchDateTime"] == null ? null : json["lastMatchDateTime"],
-    isFollowed: json["isFollowed"] == null ? null : json["isFollowed"],
-    countryName: json["countryName"] == null ? null : json["countryName"],
-  );
+        members: json["members"] == null
+            ? null
+            : List<TeamElement>.from(
+                json["members"].map((x) => TeamElement.fromJson(x))),
+        id: json["id"] == null ? null : json["id"],
+        name: json["name"] == null ? null : json["name"],
+        winCount: json["winCount"] == null ? null : json["winCount"],
+        lossCount: json["lossCount"] == null ? null : json["lossCount"],
+        lastMatchDateTime: json["lastMatchDateTime"] == null
+            ? null
+            : json["lastMatchDateTime"],
+        isFollowed: json["isFollowed"] == null ? null : json["isFollowed"],
+        countryName: json["countryName"] == null ? null : json["countryName"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "members": members == null ? null : List<dynamic>.from(members.map((x) => x.toJson())),
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-    "winCount": winCount == null ? null : winCount,
-    "lossCount": lossCount == null ? null : lossCount,
-    "lastMatchDateTime": lastMatchDateTime == null ? null : lastMatchDateTime,
-    "isFollowed": isFollowed == null ? null : isFollowed,
-    "countryName": countryName == null ? null : countryName,
-  };
+        "members": members == null
+            ? null
+            : List<dynamic>.from(members.map((x) => x.toJson())),
+        "id": id == null ? null : id,
+        "name": name == null ? null : name,
+        "winCount": winCount == null ? null : winCount,
+        "lossCount": lossCount == null ? null : lossCount,
+        "lastMatchDateTime":
+            lastMatchDateTime == null ? null : lastMatchDateTime,
+        "isFollowed": isFollowed == null ? null : isFollowed,
+        "countryName": countryName == null ? null : countryName,
+      };
 }
 
 class TeamElement {
@@ -300,22 +362,33 @@ class TeamElement {
   });
 
   factory TeamElement.fromJson(Map<String, dynamic> json) => TeamElement(
-    teamId: json["teamId"] == null ? null : json["teamId"],
-    firstMatchId: json["firstMatchId"] == null ? null : json["firstMatchId"],
-    firstMatchDateTime: json["firstMatchDateTime"] == null ? null : DateTime.parse(json["firstMatchDateTime"]),
-    lastMatchId: json["lastMatchId"] == null ? null : json["lastMatchId"],
-    lastMatchDateTime: json["lastMatchDateTime"] == null ? null : DateTime.parse(json["lastMatchDateTime"]),
-    team: json["team"] == null ? null : MemberTeam.fromJson(json["team"]),
-    steamAccount: json["steamAccount"] == null ? null : SteamAccount.fromJson(json["steamAccount"]),
-  );
+        teamId: json["teamId"] == null ? null : json["teamId"],
+        firstMatchId:
+            json["firstMatchId"] == null ? null : json["firstMatchId"],
+        firstMatchDateTime: json["firstMatchDateTime"] == null
+            ? null
+            : DateTime.parse(json["firstMatchDateTime"]),
+        lastMatchId: json["lastMatchId"] == null ? null : json["lastMatchId"],
+        lastMatchDateTime: json["lastMatchDateTime"] == null
+            ? null
+            : DateTime.parse(json["lastMatchDateTime"]),
+        team: json["team"] == null ? null : MemberTeam.fromJson(json["team"]),
+        steamAccount: json["steamAccount"] == null
+            ? null
+            : SteamAccount.fromJson(json["steamAccount"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "teamId": teamId == null ? null : teamId,
-    "firstMatchId": firstMatchId == null ? null : firstMatchId,
-    "firstMatchDateTime": firstMatchDateTime == null ? null : firstMatchDateTime.toIso8601String(),
-    "lastMatchId": lastMatchId == null ? null : lastMatchId,
-    "lastMatchDateTime": lastMatchDateTime == null ? null : lastMatchDateTime.toIso8601String(),
-    "team": team == null ? null : team.toJson(),
-    "steamAccount": steamAccount == null ? null : steamAccount.toJson(),
-  };
+        "teamId": teamId == null ? null : teamId,
+        "firstMatchId": firstMatchId == null ? null : firstMatchId,
+        "firstMatchDateTime": firstMatchDateTime == null
+            ? null
+            : firstMatchDateTime.toIso8601String(),
+        "lastMatchId": lastMatchId == null ? null : lastMatchId,
+        "lastMatchDateTime": lastMatchDateTime == null
+            ? null
+            : lastMatchDateTime.toIso8601String(),
+        "team": team == null ? null : team.toJson(),
+        "steamAccount": steamAccount == null ? null : steamAccount.toJson(),
+      };
 }

@@ -6,6 +6,7 @@ import 'package:async/async.dart';
 class PurchasedItemsList extends StatefulWidget {
   final Player player;
   final AsyncMemoizer<List<int>> _memoizer = AsyncMemoizer<List<int>>();
+
   PurchasedItemsList(this.player);
 
   @override

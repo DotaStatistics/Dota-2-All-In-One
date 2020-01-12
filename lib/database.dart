@@ -11,6 +11,7 @@ import 'models/role.dart';
 class DatabaseHelper {
   static final _databaseName = "All_In_One_Dota2_v4";
   static final _databaseVersion = 2;
+
   //static final _gameVersion
 
   // make this a singleton class
@@ -30,22 +31,25 @@ class DatabaseHelper {
 
   _initDatabase() async {
     String dataBaseDirectory = await getDatabasesPath();
-    String path = join(dataBaseDirectory, _databaseName,);
+    String path = join(
+      dataBaseDirectory,
+      _databaseName,
+    );
     return await openDatabase(path, version: _databaseVersion,
         onCreate: (db, version) async {
-          await db.execute(
-            "CREATE TABLE savedProfiles(id INTEGER PRIMARY KEY, name TEXT, avatar TEXT)",
-          );
-          await db.execute(
-            "CREATE TABLE itemList(id INTEGER PRIMARY KEY, name TEXT, image TEXT)",
-          );
-          await db.execute(
-            "CREATE TABLE gameModeList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
-          );
-          await db.execute(
-            "CREATE TABLE roleList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
-          );
-        });
+      await db.execute(
+        "CREATE TABLE savedProfiles(id INTEGER PRIMARY KEY, name TEXT, avatar TEXT)",
+      );
+      await db.execute(
+        "CREATE TABLE itemList(id INTEGER PRIMARY KEY, name TEXT, image TEXT)",
+      );
+      await db.execute(
+        "CREATE TABLE gameModeList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
+      );
+      await db.execute(
+        "CREATE TABLE roleList(id INTEGER PRIMARY KEY, name TEXT, langKey TEXT)",
+      );
+    });
   }
 
   Future close() async => DatabaseHelper.instance.close();
@@ -53,7 +57,7 @@ class DatabaseHelper {
   Future<bool> isSaved(int id) async {
     final Database db = await DatabaseHelper.instance.database;
     var response =
-    await db.query("savedProfiles", where: "id = ?", whereArgs: [id]);
+        await db.query("savedProfiles", where: "id = ?", whereArgs: [id]);
     return response.isEmpty ? false : true;
   }
 
@@ -90,14 +94,13 @@ class DatabaseHelper {
 
   Future<void> fillItemTable(List<DBItem> items) async {
     final Database db = await DatabaseHelper.instance.database;
-    items.forEach((item) async =>
-    {
-      await db.insert(
-        'itemList',
-        item.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      )
-    });
+    items.forEach((item) async => {
+          await db.insert(
+            'itemList',
+            item.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          )
+        });
   }
 
   Future<List<DBItem>> itemList() async {
@@ -116,24 +119,23 @@ class DatabaseHelper {
 
   Future<String> getImageUrl(int itemId) async {
     final Database db = await DatabaseHelper.instance.database;
-      final List<Map<String, dynamic>> maps = await db.query(
-        "itemList",
-        where: "id = ?",
-        whereArgs: [itemId],
-      );
+    final List<Map<String, dynamic>> maps = await db.query(
+      "itemList",
+      where: "id = ?",
+      whereArgs: [itemId],
+    );
     return maps[0]['image'];
-    }
+  }
 
   Future<void> fillGameModeTable(List<GameMode> modes) async {
     final Database db = await DatabaseHelper.instance.database;
-    modes.forEach((mode) =>
-    {
-      db.insert(
-        'gameModeList',
-        mode.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      )
-    });
+    modes.forEach((mode) => {
+          db.insert(
+            'gameModeList',
+            mode.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          )
+        });
   }
 
   Future<List<GameMode>> getGameModeList() async {
@@ -160,7 +162,6 @@ class DatabaseHelper {
     });
   }
 
-
   Future<String> getGameModeName(int id) async {
     final Database db = await DatabaseHelper.instance.database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -174,14 +175,13 @@ class DatabaseHelper {
 
   Future<void> fillRoleTable(List<Role> roles) async {
     final Database db = await DatabaseHelper.instance.database;
-    roles.forEach((role) =>
-    {
-      db.insert(
-        'roleList',
-        role.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      )
-    });
+    roles.forEach((role) => {
+          db.insert(
+            'roleList',
+            role.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          )
+        });
   }
 
   Future<String> getRoleName(int id) async {
@@ -221,6 +221,7 @@ class DBItem {
   final int id;
   final String name;
   final String image;
+
   DBItem({this.id, this.name, this.image});
 
   Map<String, dynamic> toMap() {

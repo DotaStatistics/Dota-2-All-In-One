@@ -7,6 +7,7 @@ import 'package:dota_stats/database.dart';
 
 class PlayerList extends StatelessWidget {
   final List<Player> players;
+
   PlayerList(this.players);
 
   @override

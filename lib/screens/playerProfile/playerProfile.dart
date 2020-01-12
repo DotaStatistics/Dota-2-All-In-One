@@ -9,7 +9,9 @@ import 'components/review.dart';
 
 class PlayerProfile extends StatefulWidget {
   final String steamId;
+
   PlayerProfile(this.steamId);
+
   @override
   _PlayerProfileState createState() => _PlayerProfileState();
 }
@@ -24,7 +26,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
     super.initState();
     initSavedStatus();
     playerInfo = fetchPlayerInfo(widget.steamId);
-
   }
 
   void initSavedStatus() async {
@@ -69,22 +70,21 @@ class _PlayerProfileState extends State<PlayerProfile> {
                           })
                     ]),
                 body: Container(
-                  color: Theme.of(context).primaryColor,
-                  child:Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      BasicProfileInfo(snapshot.data.details),
-                      Review(snapshot.data),
-                      RecentMatchesList(snapshot.data.matches),
-                    ])));
+                    color: Theme.of(context).primaryColor,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          BasicProfileInfo(snapshot.data.details),
+                          Review(snapshot.data),
+                          RecentMatchesList(snapshot.data.matches),
+                        ])));
           } else if (snapshot.hasError) {
             return Scaffold(appBar: AppBar(title: Text("${snapshot.error}")));
           }
           return Scaffold(
               appBar: AppBar(title: Text("Loading Profil Data...")),
-              body: Container(
-                child:Center(child: CircularProgressIndicator()))
-              );
+              body:
+                  Container(child: Center(child: CircularProgressIndicator())));
         });
   }
 }

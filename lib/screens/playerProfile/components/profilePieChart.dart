@@ -4,8 +4,9 @@ import 'package:dota_stats/models/playerDetails.dart';
 import 'package:dota_stats/styles/fontStyles.dart';
 
 class ProfilePieChart extends StatelessWidget {
-  final int  games;
+  final int games;
   final int wins;
+
   ProfilePieChart(this.games, this.wins);
 
   Map<String, double> dataMap = new Map();
@@ -18,8 +19,7 @@ class ProfilePieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dataMap.putIfAbsent("Wins", () => wins.toDouble());
-    dataMap.putIfAbsent("Losses",
-            () => ((games - wins).toDouble()));
+    dataMap.putIfAbsent("Losses", () => ((games - wins).toDouble()));
 
     return PieChart(
       dataMap: dataMap,

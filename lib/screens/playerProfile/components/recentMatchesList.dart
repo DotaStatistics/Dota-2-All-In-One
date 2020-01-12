@@ -9,6 +9,7 @@ import 'package:dota_stats/models/gameModes.dart';
 
 class RecentMatchesList extends StatefulWidget {
   final List<DotaMatch> matches;
+
   RecentMatchesList(this.matches);
 
   @override
@@ -43,35 +44,39 @@ class _RecentMatchesListState extends State<RecentMatchesList> {
           if (snapshot.hasData) {
             return Expanded(
                 child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: widget.matches.length,
-                  itemBuilder: (context, int) {
-                    return InkWell(
-                      onTap: () {
-                        showMatchDetails(context, widget.matches[int].id, snapshot.data);
-                      },
-                      child: MatchListItem(
-                          widget.matches[int],
-                          widget.matches[int].players[0].role != null ?
-                          snapshot
-                              .data["roles"][widget.matches[int].players[0].role]
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: widget.matches.length,
+              itemBuilder: (context, int) {
+                return InkWell(
+                  onTap: () {
+                    showMatchDetails(
+                        context, widget.matches[int].id, snapshot.data);
+                  },
+                  child: MatchListItem(
+                      widget.matches[int],
+                      widget.matches[int].players[0].role != null
+                          ? snapshot
+                              .data["roles"]
+                                  [widget.matches[int].players[0].role]
                               .name
                           : "No Role",
-                          snapshot.data["gameModes"][widget.matches[int].gameMode]
-                              .name),
-                    );
-                  },
-                ));
+                      snapshot.data["gameModes"][widget.matches[int].gameMode]
+                          .name),
+                );
+              },
+            ));
           }
           return CircularProgressIndicator();
         });
   }
 }
 
-showMatchDetails(BuildContext context, int match, Map<String, List<dynamic>> rolesAndGameModes) {
+showMatchDetails(BuildContext context, int match,
+    Map<String, List<dynamic>> rolesAndGameModes) {
   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return MatchDetailsPage(match, rolesAndGameModes); //MatchDetailPage(matchId.toString());
+    return MatchDetailsPage(
+        match, rolesAndGameModes); //MatchDetailPage(matchId.toString());
   }));
 }
 
