@@ -50,7 +50,6 @@ class ItemState extends State<ItemScreen> {
               return InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                    String itemName=data[itemKey]["displayName"].toString();
                     return ItemDetailsScreen(data, itemKey);
                   }));
                   },
@@ -81,7 +80,13 @@ class ItemState extends State<ItemScreen> {
                               Padding(padding: EdgeInsets.only(left: 16.0)),
                               new Text( data[itemKey]["displayName"] == null ?
                                   data[itemKey]["language"]["displayName"]:
-                              data[itemKey]["displayName"]),
+                              data[itemKey]["displayName"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                ),
+                              ),
+
                             ]
                         )
                     );

@@ -3,6 +3,7 @@ import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:dota_stats/drawer.dart';
+import 'package:dota_stats/screens/heroDetails/heroDetails.dart';
 
 
 class HeroScreen extends StatefulWidget {
@@ -14,9 +15,7 @@ class HeroScreen extends StatefulWidget {
 
 class HeroState extends State<HeroScreen> {
   final String url = "https://api.stratz.com/api/v1/Hero";
-//  final String url = "https://swapi.co/api/people";
   Map<String, dynamic> data = new Map();
-//  List data;
 
 
   @override
@@ -26,50 +25,65 @@ class HeroState extends State<HeroScreen> {
   }
 
   Future<dynamic> getJsonData() async {
-//  getJsonData() async {
     var response = await http.get(url);
-//    var response = await http.get(
-//        Uri.encodeFull(url),
-//        headers: {"Accept": "application/json"}
-//        );
+
     print(response.body);
 
     setState(() {
       data =  json.decode(response.body);
-//      var convertDataToJson = json.decode(response.body);
-//      data = convertDataToJson["results"];d
     });
     return "Success";
   }
 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text("List of Heroes"),
-      ),
+        appBar: AppBar(
+          title: Text("List of Heroes"),
+        ),
         drawer: AppDrawer(),
         body: new ListView.builder(
           itemCount: data.length,
-//          itemCount: data == null ? 0 : data.length,
           itemBuilder: (BuildContext context, int index) {
-            String key = data.keys.elementAt(index);
-            return new Container(
+            String itemKey = data.keys.elementAt(index);
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return HeroDetailsScreen(data, itemKey);
+                }));
+              },
               child: new Center(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    new Card(
-                      child: new Container(
-                          child: new Text(data[key]["displayName"].toString()),
-//                          child: new Text(data[index]["name"]),
-                          padding: const EdgeInsets.all(20.0)),
-                    )
+                    getCard(itemKey, index),
                   ],
                 ),
               ),
             );
           },
         ));
+  }
+
+  Card getCard(String itemKey, int index){
+    return Card(
+        child: Row(
+            children: <Widget> [
+              CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png"
+                  )
+              ),
+              Padding(padding: EdgeInsets.only(left: 16.0)),
+              new Text( data[itemKey]["displayName"],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ]
+        )
+    );
   }
 }
