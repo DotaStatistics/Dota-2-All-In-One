@@ -54,7 +54,7 @@ class HeroState extends State<HeroScreen> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    getCard(itemKey, index),
+                    getCard(index),
                   ],
                 ),
               ),
@@ -63,17 +63,17 @@ class HeroState extends State<HeroScreen> {
         ));
   }
 
-  Card getCard(String itemKey, int index){
+  Card getCard(int index){
     return Card(
         child: Row(
             children: <Widget> [
               CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png"
+                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data.heroes[index].shortName +"_full.png"
                   )
               ),
               Padding(padding: EdgeInsets.only(left: 16.0)),
-              new Text( data[itemKey]["displayName"],
+              new Text(data.heroes[index].shortName,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
