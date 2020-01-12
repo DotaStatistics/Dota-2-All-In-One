@@ -20,9 +20,9 @@ Future<PlayerResults> fetchPlayerResults(String query, int region) async {
   final response = await http.get(
       'https://api.stratz.com/api/v1/search/player?q=' +
           query +
-          '&regionId=' +
+          '&regionId=[' +
           region.toString() +
-          '&lastSeen="' +
+          ']&lastSeen="' +
           DateTime(DateTime.now().year, DateTime.now().month - 1)
               .millisecondsSinceEpoch
               .toString() +

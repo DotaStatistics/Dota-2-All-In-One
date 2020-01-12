@@ -26,6 +26,7 @@ class _PlayerSearchState extends State<PlayerSearch> {
     setState(() {
       regionId = id;
     });
+
   }
 
   @override
@@ -86,10 +87,11 @@ class _PlayerSearchState extends State<PlayerSearch> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
+            print(snapshot.data);
             if (snapshot.data.players.length == 0) {
               return Text("No profiles found. Try again");
             }
-            return PlayerList(snapshot.data.players);
+            return PlayerList(snapshot.data.players.where((player)=> player.lastMatchRegionId == regionId).toList());
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }

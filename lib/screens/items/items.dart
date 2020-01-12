@@ -64,12 +64,17 @@ class ItemState extends State<ItemScreen> {
                         child: Row(
                             children: <Widget> [
                               CircleAvatar(
+
                                   backgroundImage: NetworkImage(
-                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"]
+                                      data[itemKey]["image"] != null ?
+                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
+                                      "https://cdn.pixabay.com/photo/2017/03/05/17/02/placeholder-2119099_960_720.jpg"
                                   )
                               ),
                               Padding(padding: EdgeInsets.only(left: 16.0)),
-                              new Text(data[itemKey]["displayName"].toString()),
+                              new Text( data[itemKey]["displayName"] != null ?
+                                  data[itemKey]["displayName"].toString():
+                              "Itemname not found"),
                             ]
                         )
                     )
