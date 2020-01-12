@@ -43,6 +43,7 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
                   data[itemKey]["language"]["lore"].length != 0 ?
                   data[itemKey]["language"]["lore"][0]:
                   "",
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),
@@ -50,11 +51,14 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
               ],
             ),
           ),
-          Image.asset(
+          Container(
+              padding: EdgeInsets.fromLTRB(30,0,0,0),
+              child:
+              Image.asset(
             'assets/images/coin_Icon.png',
             height: 40,
             width: 40,
-          ),
+          ),),
           Container(
               padding: EdgeInsets.fromLTRB(5,0,0,0),
               child:
@@ -123,6 +127,11 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Image.asset(
+          path,
+          height: 40,
+          width: 40,
+        ),
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(
@@ -133,19 +142,13 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
             ),
           ),
         ),
-        Image.asset(
-          path,
-          height: 40,
-          width: 40,
-        ),
-
       ],
     );
   }
 
   String checkDescription(){
     if(data[itemKey]["language"]["description"].length==0){
-      return "Recipe to create item";
+      return "";
     }else{
       return data[itemKey]["language"]["description"][0];
 

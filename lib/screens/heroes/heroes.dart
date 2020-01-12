@@ -1,13 +1,9 @@
-import 'package:dota_stats/apiCalls.dart';
-import 'package:dota_stats/models/heroesAndAbilities.dart';
 import "package:flutter/material.dart";
 import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:dota_stats/drawer.dart';
 import 'package:dota_stats/screens/heroDetails/heroDetails.dart';
-import 'package:dota_stats/models/dotaHero.dart';
-import 'package:dota_stats/models/dotaAbility.dart';
 
 
 class HeroScreen extends StatefulWidget {
@@ -18,43 +14,66 @@ class HeroScreen extends StatefulWidget {
 }
 
 class HeroState extends State<HeroScreen> {
-  HeroesAndAbilities data;
+//  final String url = "https://api.stratz.com/api/v1/Hero";
+  Map<String, dynamic> data = new Map();
+  Map<String, dynamic> dataAbilities = new Map();
+
+
 
   @override
   void initState() {
     super.initState();
-    fetchHeroesAndAbilities().then((result){
-      setState(() {
-        data = result;
-      });
-    });
+    this.getJsonData();
+    this.getJsonData2();
+
   }
 
-  List<DotaAbility> getAbilities (int abilityId, List<DotaAbility> abilities){
-    return abilities.where((ability) => ability.id == abilityId).toList();
+  Future<dynamic> getJsonData() async {
+    var response = await http.get("https://api.stratz.com/api/v1/Hero");
+
+    print(response.body);
+
+    setState(() {
+      data =  json.decode(response.body);
+    });
+    return "Success";
   }
+
+  Future<dynamic> getJsonData2() async {
+    var response = await http.get("https://api.stratz.com/api/v1/Ability");
+
+    print(response.body);
+
+    setState(() {
+      dataAbilities =  json.decode(response.body);
+    });
+    return "Success";
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    String itemKeyAbilities;
     return new Scaffold(
         appBar: AppBar(
           title: Text("List of Heroes"),
         ),
         drawer: AppDrawer(),
         body: new ListView.builder(
-          itemCount: data.heroes.length,
+          itemCount: data.length,
           itemBuilder: (BuildContext context, int index) {
+            String itemKey = data.keys.elementAt(index);
             return InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HeroDetailsScreen(data.heroes[index], getAbilities(data.heroes[index].id, data.abilities));
+                  return HeroDetailsScreen(data, itemKey, dataAbilities, itemKeyAbilities);
                 }));
               },
               child: new Center(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    getCard(index),
+                    getCard(itemKey, index),
                   ],
                 ),
               ),
@@ -63,17 +82,17 @@ class HeroState extends State<HeroScreen> {
         ));
   }
 
-  Card getCard(int index){
+  Card getCard(String itemKey, int index){
     return Card(
         child: Row(
             children: <Widget> [
               CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data.heroes[index].shortName +"_full.png"
+                      "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png"
                   )
               ),
               Padding(padding: EdgeInsets.only(left: 16.0)),
-              new Text(data.heroes[index].shortName,
+              new Text( data[itemKey]["displayName"],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,

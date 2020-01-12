@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
     initiateItems();
     return Scaffold(
       appBar: AppBar(
-        title: Text("home"),
+        title: Text("Home"),
       ),
       drawer: AppDrawer(),
       body: PlayerSearch(),
