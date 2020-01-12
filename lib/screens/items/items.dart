@@ -3,6 +3,8 @@ import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:dota_stats/drawer.dart';
+import 'package:dota_stats/screens/itemDetails/itemDetails.dart';
+
 
 class ItemScreen extends StatefulWidget {
   static const String routeName = '/items';
@@ -13,9 +15,7 @@ class ItemScreen extends StatefulWidget {
 
 class ItemState extends State<ItemScreen> {
   final String url = "https://api.stratz.com/api/v1/Item";
-//  final String url = "https://swapi.co/api/people";
   Map<String, dynamic> data = new Map();
-//  List data;
 
 
   @override
@@ -25,21 +25,16 @@ class ItemState extends State<ItemScreen> {
   }
 
   Future<dynamic> getJsonData() async {
-//  getJsonData() async {
     var response = await http.get(url);
-//    var response = await http.get(
-//        Uri.encodeFull(url),
-//        headers: {"Accept": "application/json"}
-//        );
+
     print(response.body);
 
     setState(() {
       data =  json.decode(response.body);
-//      var convertDataToJson = json.decode(response.body);
-//      data = convertDataToJson["results"];
     });
     return "Success";
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +47,31 @@ class ItemState extends State<ItemScreen> {
           itemCount: data.length,
 //          itemCount: data == null ? 0 : data.length,
           itemBuilder: (BuildContext context, int index) {
-            String key = data.keys.elementAt(index);
-            return new Container(
+            String itemKey = data.keys.elementAt(index);
+//            return new Container(
+              return InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    String itemName=data[itemKey]["displayName"].toString();
+                    return ItemDetailsScreen(data, itemKey);
+                  }));
+                  },
               child: new Center(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     new Card(
-                      child: new Container(
-                          child: new Text(data[key]["displayName"].toString()),
-//                          child: new Text(data[index]["name"]),
-                          padding: const EdgeInsets.all(20.0)),
+                        child: Row(
+                            children: <Widget> [
+                              CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"]
+                                  )
+                              ),
+                              Padding(padding: EdgeInsets.only(left: 16.0)),
+                              new Text(data[itemKey]["displayName"].toString()),
+                            ]
+                        )
                     )
                   ],
                 ),
