@@ -2,19 +2,19 @@ import "package:flutter/material.dart";
 import 'package:flutter_html/flutter_html.dart';
 
 
-class ItemDetailsScreen extends StatefulWidget {
+class HeroDetailsScreen extends StatefulWidget {
   Map<String, dynamic> data;
   final String itemKey;
 
-  ItemDetailsScreen(this.data, this.itemKey);
+  HeroDetailsScreen(this.data, this.itemKey);
   @override
-  ItemDetailsState createState() => ItemDetailsState(data, itemKey);
+  HeroDetailsState createState() => HeroDetailsState(data, itemKey);
 }
 
-class ItemDetailsState extends State<ItemDetailsScreen> {
+class HeroDetailsState extends State<HeroDetailsScreen> {
   Map<String, dynamic> data;
   String itemKey;
-  ItemDetailsState(this.data, this.itemKey);
+  HeroDetailsState(this.data, this.itemKey);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,8 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    data[itemKey]["language"]["displayName"].toUpperCase(),
+                    data[itemKey]["displayName"].toUpperCase(),
+//                    data[itemKey]["language"]["displayName"].toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -40,9 +41,7 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
                   ),
                 ),
                 Text(
-                  data[itemKey]["language"]["lore"].length != 0 ?
-                  data[itemKey]["language"]["lore"][0]:
-                  "",
+                  data[itemKey]["stat"]["attackType"].toString()+" Hero",
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),
@@ -50,20 +49,22 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
               ],
             ),
           ),
-          Image.asset(
-            'assets/images/coin_Icon.png',
-            height: 40,
-            width: 40,
-          ),
-          Container(
-              padding: EdgeInsets.fromLTRB(5,0,0,0),
-              child:
-              Text(data[itemKey]["stat"]["cost"].toString(),
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                  ))),
+//          Image.asset(
+//            'assets/images/coin_Icon.png',
+//            height: 40,
+//            width: 40,
+//          ),
+//          Container(
+//              padding: EdgeInsets.fromLTRB(5,0,0,0),
+//              child:
+//              Text(
+//                "cost",
+////                  data[itemKey]["stat"]["cost"].toString(),
+//                  textAlign: TextAlign.right,
+//                  style: TextStyle(
+//                    fontSize: 25,
+//                    fontWeight: FontWeight.w500,
+//                  ))),
         ],
       ),
     );
@@ -73,20 +74,24 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn('assets/images/Strength_Icon.png', "Strength"),
-          _buildButtonColumn('assets/images/Agility_Icon.png', 'Agility'),
-          _buildButtonColumn('assets/images/Intelligence_Icon.png', 'Intelligence'),
+          _buildButtonColumn('assets/images/Strength_Icon.png', "strength"),
+          _buildButtonColumn('assets/images/Agility_Icon.png', 'agility'),
+          _buildButtonColumn('assets/images/Intelligence_Icon.png', 'intelligence'),
         ],
       ),
     );
 
     Widget textSection = Container(
-      padding: const EdgeInsets.fromLTRB(15,20,0,20),
+      padding: const EdgeInsets.fromLTRB(15,20,15,20),
       child: SingleChildScrollView(
         //        //TODO Description==Null behandeln.
-        child: Html(
-          data: checkDescription(),
-//          data: data[itemKey]["name"],
+        child: Text(
+          returnBio(),
+          textAlign: TextAlign.justify,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );
@@ -101,10 +106,11 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
             new ClipRRect(
               borderRadius: new BorderRadius.only(bottomRight: Radius.circular(15),bottomLeft: Radius.circular(15)),
               child: Image.network(
-                  data[itemKey]["image"] != null ?
-                  "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
-                  "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png",
-                fit: BoxFit.cover
+                  "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png",
+//                  data[itemKey]["image"] != null ?
+//                  "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
+//                  "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png",
+                  fit: BoxFit.cover
               ),
             ),
             Padding(padding: EdgeInsets.only(left: 16.0)),
@@ -143,24 +149,14 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
     );
   }
 
-  String checkDescription(){
-    if(data[itemKey]["language"]["description"].length==0){
-      return "Recipe to create item";
-    }else{
-      return data[itemKey]["language"]["description"][0];
-
-    }
-
+  String returnBio(){
+      return data[itemKey]["language"]["bio"];
   }
 
   String _getAttributeValue(String attribute) {
-    if(data[itemKey]["language"]["attributes"].length!=0){
-    for (var i = 0; i < data[itemKey]["language"]["attributes"].length; i++) {
-      if (data[itemKey]["language"]["attributes"][i].contains(attribute)) {
-        return (data[itemKey]["language"]["attributes"][i].split(" ")[0]);
-      } else return "0";
-    }
-  } else return "0";
+    return data[itemKey]["stat"][attribute+"Base"].toString()+" + "+ data[itemKey]["stat"][attribute+"Gain"].toString() ;
+//  return "10";
+
   }
 }
 

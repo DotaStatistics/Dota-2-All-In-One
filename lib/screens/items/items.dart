@@ -45,14 +45,11 @@ class ItemState extends State<ItemScreen> {
         drawer: AppDrawer(),
         body: new ListView.builder(
           itemCount: data.length,
-//          itemCount: data == null ? 0 : data.length,
           itemBuilder: (BuildContext context, int index) {
             String itemKey = data.keys.elementAt(index);
-//            return new Container(
               return InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    String itemName=data[itemKey]["displayName"].toString();
                     return ItemDetailsScreen(data, itemKey);
                   }));
                   },
@@ -60,28 +57,38 @@ class ItemState extends State<ItemScreen> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    new Card(
-                        child: Row(
-                            children: <Widget> [
-                              CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      data[itemKey]["image"] != null ?
-                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
-                                      "https://cdn.pixabay.com/photo/2017/03/05/17/02/placeholder-2119099_960_720.jpg"
-                                  )
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 16.0)),
-                              new Text( data[itemKey]["displayName"] != null ?
-                                  data[itemKey]["displayName"].toString():
-                              "Itemname not found"),
-                            ]
-                        )
-                    )
+                    getCard(itemKey, index),
                   ],
                 ),
               ),
             );
           },
         ));
+  }
+
+  Card getCard(String itemKey, int index){
+    return Card(
+                        child: Row(
+                            children: <Widget> [
+                              CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      data[itemKey]["image"] != null ?
+                                      "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
+                                      "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png"
+                                  )
+                              ),
+                              Padding(padding: EdgeInsets.only(left: 16.0)),
+                              new Text( data[itemKey]["displayName"] == null ?
+                                  data[itemKey]["language"]["displayName"]:
+                              data[itemKey]["displayName"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                ),
+                              ),
+
+                            ]
+                        )
+                    );
   }
 }
