@@ -145,7 +145,7 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
 
   String checkDescription(){
     if(data[itemKey]["language"]["description"].length==0){
-      return "";
+      return "Recipe to create item";
     }else{
       return data[itemKey]["language"]["description"][0];
 
