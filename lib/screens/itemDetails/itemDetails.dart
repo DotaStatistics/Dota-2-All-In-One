@@ -32,7 +32,7 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    data[itemKey]["displayName"].toUpperCase(),
+                    data[itemKey]["language"]["displayName"].toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -40,7 +40,9 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
                   ),
                 ),
                 Text(
-                  data[itemKey]["language"]["lore"][0],
+                  data[itemKey]["language"]["lore"].length != 0 ?
+                  data[itemKey]["language"]["lore"][0]:
+                  "",
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),
@@ -84,7 +86,7 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
         //        //TODO Description==Null behandeln.
         child: Html(
           data: checkDescription(),
-//          data: data[itemKey]["language"]["description"][0],
+//          data: data[itemKey]["name"],
         ),
       ),
     );
@@ -99,7 +101,9 @@ class ItemDetailsState extends State<ItemDetailsScreen> {
             new ClipRRect(
               borderRadius: new BorderRadius.only(bottomRight: Radius.circular(15),bottomLeft: Radius.circular(15)),
               child: Image.network(
-                "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"],
+                  data[itemKey]["image"] != null ?
+                  "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
+                  "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png",
                 fit: BoxFit.cover
               ),
             ),
