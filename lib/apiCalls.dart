@@ -10,12 +10,6 @@ import 'package:dota_stats/models/playerInfo.dart';
 import 'models/item.dart';
 import 'models/matchDetails.dart';
 
-const playerSearch = '';
-
-//TODO Konstanten definieren
-//TODO eventuell alles als eine methode mit switch case
-//TODO anfang der url als konstante?
-
 Future<PlayerResults> fetchPlayerResults(String query, int region) async {
   final response = await http.get(
       'https://api.stratz.com/api/v1/search/player?q=' +

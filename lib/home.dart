@@ -5,36 +5,26 @@ import 'drawer.dart';
 import 'database.dart';
 import 'models/gameModes.dart';
 
-
 class Home extends StatelessWidget {
   static const String routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    //initiateLists();
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("home"),
-          ),
-          drawer: AppDrawer(),
-          body: PlayerSearch(),
-          backgroundColor: Theme.of(context).primaryColor,
-        );
+    initiateItems();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("home"),
+      ),
+      drawer: AppDrawer(),
+      body: PlayerSearch(),
+      backgroundColor: Theme.of(context).primaryColor,
+    );
   }
 }
 
-
-//TODO initialize at least itemLIST!!!(still in use)
-void initiateLists() async {
-  Future.wait([
-  fetchItemList().then((result){
+void initiateItems() async {
+  await fetchItemList().then((result) {
     List<DBItem> itemList = List();
-    result.forEach((k,v) => itemList.add(DBItem.fromAPI(v)));
+    result.forEach((k, v) => itemList.add(DBItem.fromAPI(v)));
     DatabaseHelper.instance.fillItemTable(itemList);
-  }),
-  fetchGameModeList().then((result){
-    DatabaseHelper.instance.fillGameModeTable(result.entries.map((e) => e.value).toList());
-  }),
-  fetchRoleList().then((result){
-    DatabaseHelper.instance.fillRoleTable(result);})
-  ]);
+  });
 }

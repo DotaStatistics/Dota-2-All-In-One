@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dota_stats/database.dart';
 
-//TODO zu stateless widget umwandeln
-
 class SavedPlayerListItem extends StatefulWidget {
   final DBPlayer player;
   SavedPlayerListItem(this.player);

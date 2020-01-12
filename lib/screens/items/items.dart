@@ -64,7 +64,6 @@ class ItemState extends State<ItemScreen> {
                         child: Row(
                             children: <Widget> [
                               CircleAvatar(
-
                                   backgroundImage: NetworkImage(
                                       data[itemKey]["image"] != null ?
                                       "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :

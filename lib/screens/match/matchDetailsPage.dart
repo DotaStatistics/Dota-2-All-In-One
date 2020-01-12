@@ -1,13 +1,10 @@
 import 'package:dota_stats/apiCalls.dart';
 import 'package:dota_stats/models/matchDetails.dart' as prefix0;
 import 'package:flutter/material.dart';
-import 'package:dota_stats/models/dotaMatch.dart';
 import 'package:dota_stats/models/matchDetails.dart';
 import 'components/teamOverview.dart';
 import 'components/teamDetails.dart';
 import 'package:dota_stats/styles/fontStyles.dart';
-
-// TODO implement MatchDetailsPage
 
 class MatchDetailsPage extends StatefulWidget {
   final int match;
@@ -64,7 +61,6 @@ class _MatchDetailsState extends State<MatchDetailsPage> {
                     child: Container(
                         color: Theme.of(context).primaryColor,
                         child: Column(children: <Widget>[
-                          //TODO Overview with Date, duration, gameType
                           TeamOverview(snapshot.data),
                           Text("Team Radiant",
                               style: FontStyles.whiteTextHeader()),
@@ -79,7 +75,6 @@ class _MatchDetailsState extends State<MatchDetailsPage> {
           return Scaffold(
               body: Center(
                   child: Container(
-                      color: Theme.of(context).primaryColor,
                       child: Container(
                           height: 20.0,
                           width: 20.0,

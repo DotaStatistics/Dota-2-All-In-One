@@ -16,8 +16,6 @@ class MatchListItem extends StatefulWidget {
   _MatchListItemState createState() => _MatchListItemState();
 }
 
-//TODO: implement matchItemInfo as Map
-
 class _MatchListItemState extends State<MatchListItem> {
   DatabaseHelper db = DatabaseHelper.instance;
 

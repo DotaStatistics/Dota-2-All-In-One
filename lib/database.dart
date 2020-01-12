@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:dota_stats/models/playerInfo.dart';
 import 'models/gameModes.dart';
 
@@ -8,8 +7,6 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:dota_stats/models/item.dart';
 import 'models/role.dart';
-
-//TODO: save Gameversion and check for updates on startup
 
 class DatabaseHelper {
   static final _databaseName = "All_In_One_Dota2_v4";
@@ -61,7 +58,6 @@ class DatabaseHelper {
   }
 
   Future<void> insertPlayer(DBPlayer player) async {
-    // Get a reference to the database.
     final Database db = await DatabaseHelper.instance.database;
     await db.insert(
       'savedProfiles',
@@ -80,12 +76,9 @@ class DatabaseHelper {
   }
 
   Future<List<DBPlayer>> savedProfiles() async {
-    // Get a reference to the database.
     final Database db = await DatabaseHelper.instance.database;
-
     final List<Map<String, dynamic>> maps = await db.query('savedProfiles');
 
-    // Convert the List
     return List.generate(maps.length, (i) {
       return DBPlayer(
         id: maps[i]['id'],
@@ -97,9 +90,9 @@ class DatabaseHelper {
 
   Future<void> fillItemTable(List<DBItem> items) async {
     final Database db = await DatabaseHelper.instance.database;
-    items.forEach((item) =>
+    items.forEach((item) async =>
     {
-      db.insert(
+      await db.insert(
         'itemList',
         item.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -201,11 +194,7 @@ class DatabaseHelper {
     await DatabaseHelper.instance.close();
     return maps[0]['name'];
   }
-
-
 }
-
-//TODO saved & recent booleans in datenbank integrieren
 
 class DBPlayer {
   final int id;

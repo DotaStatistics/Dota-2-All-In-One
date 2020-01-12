@@ -48,7 +48,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
     });
   }
 
-  //TODO: Close db when profile is closed
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PlayerInfo>(
@@ -84,7 +83,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
           return Scaffold(
               appBar: AppBar(title: Text("Loading Profil Data...")),
               body: Container(
-                  color: Theme.of(context).primaryColor,
                 child:Center(child: CircularProgressIndicator()))
               );
         });

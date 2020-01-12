@@ -65,8 +65,10 @@ class _PlayerOverviewState extends State<PlayerOverview> {
                     ],
                   )));
         }
-        return Container(
-            width: 10.0, height: 10.0, child: CircularProgressIndicator());
+        return Center(
+          child:Container(
+              width: 7.0, height: 7.0, child: CircularProgressIndicator()));
+
       },
     );
   }

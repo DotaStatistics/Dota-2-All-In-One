@@ -10,43 +10,20 @@ class PurchasedItemsList extends StatefulWidget {
 
   @override
   _PurchasedItemsListState createState() => _PurchasedItemsListState();
-  }
+}
 
 class _PurchasedItemsListState extends State<PurchasedItemsList> {
   Future<List<String>> itemUrls;
 
-
-
-
   Future<List<int>> createItemList() async {
-    return widget._memoizer.runOnce(() async{
-      return widget.player.itemList.where((item) => item != null && item != 0).toList();
-     /*
-      List<int> itemIds =[];
-      if (widget.player.item0Id != 0 && widget.player.item0Id != null) {
-        itemIds.add(widget.player.item0Id);
-      }
-      if (widget.player.item1Id != 0 && widget.player.item1Id != null) {
-        itemIds.add(widget.player.item1Id);
-      }
-      if (widget.player.item2Id != 0 && widget.player.item2Id != null) {
-        itemIds.add(widget.player.item2Id);
-      }
-      if (widget.player.item3Id != 0 && widget.player.item3Id != null) {
-        itemIds.add(widget.player.item3Id);
-      }
-      if (widget.player.item4Id != 0 && widget.player.item4Id != null) {
-        itemIds.add(widget.player.item4Id);
-      }
-      if (widget.player.item5Id != 0 && widget.player.item5Id != null) {
-        itemIds.add(widget.player.item5Id);
-      }
-      return itemIds;
-      */
+    return widget._memoizer.runOnce(() async {
+      return widget.player.itemList
+          .where((item) => item != null && item != 0)
+          .toList();
     });
   }
 
-  Future<List<String>> initialize() async {
+  Future<List<String>> initializeUrlList() async {
     return createItemList().then((result) {
       return itemUrlList(result);
     });
@@ -54,49 +31,45 @@ class _PurchasedItemsListState extends State<PurchasedItemsList> {
 
   Future<List<String>> itemUrlList(List<int> itemIds) async {
     return Future.wait(itemIds.map((item) {
-        return itemUrlLookup(item);
+      return itemUrlLookup(item);
     }));
   }
 
-  //TODO Db might return null for URL (at least one item). only return non-null values
-  Future<String> itemUrlLookup(int item) async{
+  Future<String> itemUrlLookup(int item) async {
     return DatabaseHelper.instance.getImageUrl(item);
   }
 
-    @override
+  @override
   void initState() {
-      itemUrls = initialize();
+    itemUrls = initializeUrlList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>>(
-      future: itemUrls,
-        builder: (context, snapshot){
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-          return Container(
-
-              height: 30.0,
-              child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, int) {
-                return Container(
-                    width:30.0,
-                    height: 30.0,
-                    decoration: BoxDecoration(shape: BoxShape.rectangle),
-                    child: Image.network(
-                        "http://cdn.dota2.com/apps/dota2/images/items/" + snapshot.data[int]
-                    ));
-              }
-          ));
-        }
-        return Container();
-        }
-    );
-
+        future: itemUrls,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Container(
+                height: 30.0,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, int) {
+                      return Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(shape: BoxShape.rectangle),
+                          child: Image.network(snapshot.data[int] != null
+                              ? "http://cdn.dota2.com/apps/dota2/images/items/" +
+                                  snapshot.data[int]
+                              : "https://cdn.pixabay.com/photo/2017/03/05/17/02/placeholder-2119099_960_720.jpg"));
+                    }));
+          }
+          return Container();
+        });
   }
 }
-

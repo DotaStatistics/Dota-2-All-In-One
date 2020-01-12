@@ -77,7 +77,6 @@ showMatchDetails(BuildContext context, int match, Map<String, List<dynamic>> rol
 
 /*
 Database-Methods to get Roles and GameModes - currently not functional
-//TODO implement as batch might work
 
 Future<Map<String,List<String>>> getRolesAndMatchType(List<DotaMatch> matches) async{
   Map<String,List<String>> map = Map();

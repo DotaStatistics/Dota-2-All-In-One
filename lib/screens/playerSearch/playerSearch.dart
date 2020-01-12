@@ -7,10 +7,6 @@ import 'package:dota_stats/screens/playerSearch/components/playerList.dart';
 import 'package:dota_stats/styles/fontStyles.dart';
 import 'components/regionFilterDropdownButton.dart';
 
-// TODO: implement as Singleton
-// TODO: SearchIcon einfügen im Textfield
-// TODO : Alternative Seite, wenn SavedPlayers leer ist
-
 class PlayerSearch extends StatefulWidget {
   PlayerSearch();
   @override
@@ -28,6 +24,8 @@ class _PlayerSearchState extends State<PlayerSearch> {
     });
 
   }
+
+ // _searchForPlayer(S)
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +47,13 @@ class _PlayerSearchState extends State<PlayerSearch> {
                   textAlign: TextAlign.left,
                   controller: controller,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5.0),
+                    contentPadding: EdgeInsets.only(bottom: 10.0, left: 3.0),
                     hintText: 'Look up a Player...',
                   ),
-                  onSubmitted: (String query) {
+                  onSubmitted: (String s) {
                     setState(() {
                       playerResults =
-                          fetchPlayerResults(controller.text, regionId);
+                          fetchPlayerResults(s, regionId);
                     });
                   },
                 ),
@@ -87,11 +85,10 @@ class _PlayerSearchState extends State<PlayerSearch> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            print(snapshot.data);
             if (snapshot.data.players.length == 0) {
               return Text("No profiles found. Try again");
             }
-            return PlayerList(snapshot.data.players.where((player)=> player.lastMatchRegionId == regionId).toList());
+            return PlayerList(snapshot.data.players);
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
