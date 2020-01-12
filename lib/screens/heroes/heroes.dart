@@ -1,9 +1,13 @@
+import 'package:dota_stats/apiCalls.dart';
+import 'package:dota_stats/models/heroesAndAbilities.dart';
 import "package:flutter/material.dart";
 import "dart:async";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:dota_stats/drawer.dart';
 import 'package:dota_stats/screens/heroDetails/heroDetails.dart';
+import 'package:dota_stats/models/dotaHero.dart';
+import 'package:dota_stats/models/dotaAbility.dart';
 
 
 class HeroScreen extends StatefulWidget {
@@ -14,27 +18,21 @@ class HeroScreen extends StatefulWidget {
 }
 
 class HeroState extends State<HeroScreen> {
-  final String url = "https://api.stratz.com/api/v1/Hero";
-  Map<String, dynamic> data = new Map();
-
+  HeroesAndAbilities data;
 
   @override
   void initState() {
     super.initState();
-    this.getJsonData();
-  }
-
-  Future<dynamic> getJsonData() async {
-    var response = await http.get(url);
-
-    print(response.body);
-
-    setState(() {
-      data =  json.decode(response.body);
+    fetchHeroesAndAbilities().then((result){
+      setState(() {
+        data = result;
+      });
     });
-    return "Success";
   }
 
+  List<DotaAbility> getAbilities (int abilityId, List<DotaAbility> abilities){
+    return abilities.where((ability) => ability.id == abilityId).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +42,12 @@ class HeroState extends State<HeroScreen> {
         ),
         drawer: AppDrawer(),
         body: new ListView.builder(
-          itemCount: data.length,
+          itemCount: data.heroes.length,
           itemBuilder: (BuildContext context, int index) {
-            String itemKey = data.keys.elementAt(index);
             return InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HeroDetailsScreen(data, itemKey);
+                  return HeroDetailsScreen(data.heroes[index], getAbilities(data.heroes[index].id, data.abilities));
                 }));
               },
               child: new Center(

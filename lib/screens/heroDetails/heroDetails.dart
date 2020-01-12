@@ -1,25 +1,22 @@
+import 'package:dota_stats/models/dotaAbility.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_html/flutter_html.dart';
+import 'package:dota_stats/models/dotaHero.dart';
 
 
 class HeroDetailsScreen extends StatefulWidget {
-  Map<String, dynamic> data;
-  final String itemKey;
+  final DotaHero hero;
+  final List<DotaAbility> abilities;
 
-  HeroDetailsScreen(this.data, this.itemKey);
+  HeroDetailsScreen(this.hero, this.abilities);
   @override
-  HeroDetailsState createState() => HeroDetailsState(data, itemKey);
+  HeroDetailsState createState() => HeroDetailsState();
 }
 
 class HeroDetailsState extends State<HeroDetailsScreen> {
-  Map<String, dynamic> data;
-  String itemKey;
-  HeroDetailsState(this.data, this.itemKey);
-
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
-
 
     Widget titleSection = Container(
       padding: const EdgeInsets.all(15),
@@ -32,7 +29,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    data[itemKey]["displayName"].toUpperCase(),
+                    widget.hero.displayName.toUpperCase(),
 //                    data[itemKey]["language"]["displayName"].toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -41,7 +38,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                   ),
                 ),
                 Text(
-                  data[itemKey]["stat"]["attackType"].toString()+" Hero",
+                  widget.hero.stat.attackType.toString()+" Hero",
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),
@@ -106,7 +103,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
             new ClipRRect(
               borderRadius: new BorderRadius.only(bottomRight: Radius.circular(15),bottomLeft: Radius.circular(15)),
               child: Image.network(
-                  "http://cdn.dota2.com/apps/dota2/images/heroes/" + data[itemKey]["shortName"]+"_full.png",
+                  "http://cdn.dota2.com/apps/dota2/images/heroes/" + widget.hero.shortName +"_full.png",
 //                  data[itemKey]["image"] != null ?
 //                  "http://cdn.dota2.com/apps/dota2/images/items/" + data[itemKey]["image"] :
 //                  "https://gamepedia.cursecdn.com/dota2_gamepedia/7/73/Default_recipe_icon.png",
@@ -150,7 +147,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
   }
 
   String returnBio(){
-      return data[itemKey]["language"]["bio"];
+      return widget.hero.language.bio;
   }
 
   String _getAttributeValue(String attribute) {

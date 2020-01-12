@@ -1,5 +1,8 @@
+import 'package:dota_stats/models/dotaAbility.dart';
 import 'package:dota_stats/models/gameModes.dart';
-import 'package:dota_stats/models/role.dart';
+import 'package:dota_stats/models/dotaHero.dart';
+import 'package:dota_stats/models/heroesAndAbilities.dart';
+import 'package:dota_stats/models/role.dart' as prefix0;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -78,11 +81,11 @@ Future<Map<String, GameMode>> fetchGameModeList() async {
   }
 }
 
-Future<List<Role>> fetchRoleList() async {
+Future<List<prefix0.Role>> fetchRoleList() async {
   final response = await http.get('https://api.stratz.com/api/v1/Hero/roles');
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
-    return roleFromJson(response.body);
+    return prefix0.roleFromJson(response.body);
   } else {
     // If that call was not successful, throw an error.
     throw Exception('Failed to load roles');
@@ -112,4 +115,30 @@ Future<String> fetchPlayerNameFromId(int id) async {
     // If that call was not successful, throw an error.
     throw Exception('Failed to load MatchDetails');
   }
+}
+
+Future<HeroesAndAbilities> fetchHeroesAndAbilities() async {
+  List<DotaHero> heroes;
+  List<DotaAbility> abilities;
+  final response = await http.get('https://api.stratz.com/api/v1/Hero');
+
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    heroes =
+        dotaHeroFromJson(response.body).entries.map((e) => e.value).toList();
+  } else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load post');
+  }
+
+  final response2 = await http.get('https://api.stratz.com/api/v1/Ability');
+  if (response2.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    abilities =
+        dotaAbilityFromJson(response.body).entries.map((e) => e.value).toList();
+  } else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load matches');
+  }
+  return HeroesAndAbilities(heroes, abilities);
 }
