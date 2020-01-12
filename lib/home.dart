@@ -22,6 +22,8 @@ class Home extends StatelessWidget {
   }
 }
 
+
+//TODO initialize at least itemLIST!!!(still in use)
 void initiateLists() async {
   Future.wait([
   fetchItemList().then((result){

@@ -254,12 +254,7 @@ class Player {
   };
 
   factory Player.fromMatchDetails(prefix0.Player player) => Player(
-    item0Id: player.item0Id,
-    item1Id: player.item1Id,
-    item2Id: player.item2Id,
-    item3Id: player.item3Id,
-    item4Id: player.item4Id,
-    item5Id: player.item5Id
+    itemList: player.itemList
   );
 
 }

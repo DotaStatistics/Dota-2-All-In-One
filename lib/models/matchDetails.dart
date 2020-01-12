@@ -132,6 +132,7 @@ class Player {
   int item3Id;
   int item4Id;
   int item5Id;
+  List<int> itemList;
   int backpack0Id;
   int backpack1Id;
   int behavior;
@@ -173,6 +174,7 @@ class Player {
     this.item3Id,
     this.item4Id,
     this.item5Id,
+    this.itemList,
     this.backpack0Id,
     this.backpack1Id,
     this.behavior,
@@ -215,6 +217,7 @@ class Player {
     item3Id: json["item3Id"] == null ? null : json["item3Id"],
     item4Id: json["item4Id"] == null ? null : json["item4Id"],
     item5Id: json["item5Id"] == null ? null : json["item5Id"],
+    itemList: [json["item0Id"],json["item1Id"],json["item2Id"], json["item3Id"],json["item4Id"], json["item5Id"]],
     backpack0Id: json["backpack0Id"] == null ? null : json["backpack0Id"],
     backpack1Id: json["backpack1Id"] == null ? null : json["backpack1Id"],
     behavior: json["behavior"] == null ? null : json["behavior"],
@@ -257,6 +260,7 @@ class Player {
     "item3Id": item3Id == null ? null : item3Id,
     "item4Id": item4Id == null ? null : item4Id,
     "item5Id": item5Id == null ? null : item5Id,
+    "itemList" : [item0Id, item1Id, item2Id, item3Id, item4Id, item5Id],
     "backpack0Id": backpack0Id == null ? null : backpack0Id,
     "backpack1Id": backpack1Id == null ? null : backpack1Id,
     "behavior": behavior == null ? null : behavior,

@@ -15,9 +15,13 @@ class PurchasedItemsList extends StatefulWidget {
 class _PurchasedItemsListState extends State<PurchasedItemsList> {
   Future<List<String>> itemUrls;
 
-  //TODO Liste im Model initialisieren
+
+
+
   Future<List<int>> createItemList() async {
     return widget._memoizer.runOnce(() async{
+      return widget.player.itemList.where((item) => item != null && item != 0).toList();
+     /*
       List<int> itemIds =[];
       if (widget.player.item0Id != 0 && widget.player.item0Id != null) {
         itemIds.add(widget.player.item0Id);
@@ -38,6 +42,7 @@ class _PurchasedItemsListState extends State<PurchasedItemsList> {
         itemIds.add(widget.player.item5Id);
       }
       return itemIds;
+      */
     });
   }
 
@@ -49,10 +54,11 @@ class _PurchasedItemsListState extends State<PurchasedItemsList> {
 
   Future<List<String>> itemUrlList(List<int> itemIds) async {
     return Future.wait(itemIds.map((item) {
-      return itemUrlLookup(item);
+        return itemUrlLookup(item);
     }));
   }
 
+  //TODO Db might return null for URL (at least one item). only return non-null values
   Future<String> itemUrlLookup(int item) async{
     return DatabaseHelper.instance.getImageUrl(item);
   }

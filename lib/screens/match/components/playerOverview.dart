@@ -22,56 +22,52 @@ class PlayerOverview extends StatefulWidget {
   _PlayerOverviewState createState() => _PlayerOverviewState();
 }
 
-class _PlayerOverviewState extends State<PlayerOverview>{
+class _PlayerOverviewState extends State<PlayerOverview> {
   Future<String> playerName;
 
   @override
   void initState() {
     super.initState();
     playerName = fetchPlayerNameFromId(widget.player.steamId);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
       future: playerName,
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
           return Center(
               child: Container(
-            height: 70.0,
-            child:
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("Name: " + snapshot.data,
-                  style: FontStyles.whiteText()),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("   KDA:",
-                  style: FontStyles.whiteText()),
-                  KDA(widget.player.numKills, widget.player.numDeaths, widget.player.numAssists),
-                  Text("  Role: ",
-                  style: FontStyles.whiteText()),
-                  Text(widget.roles[widget.player.role].name,
-                  style: FontStyles.whiteText())
-                ],
-              ),
-              PurchasedItemsList(prefix2.Player.fromMatchDetails(widget.player))
-            ],
-          )));
+                  height: 70.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Name: " + snapshot.data,
+                          style: FontStyles.whiteText()),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("   KDA:", style: FontStyles.whiteText()),
+                          KDA(widget.player.numKills, widget.player.numDeaths,
+                              widget.player.numAssists),
+                          Text("  Role: ", style: FontStyles.whiteText()),
+                          Text(
+                              widget.player.role != null
+                                  ? widget.roles[widget.player.role].name
+                                  : "No Role",
+                              style: FontStyles.whiteText())
+                        ],
+                      ),
+                      PurchasedItemsList(
+                          prefix2.Player.fromMatchDetails(widget.player))
+                    ],
+                  )));
         }
         return Container(
-          width: 10.0,
-          height: 10.0,
-          child: CircularProgressIndicator()
-        );
+            width: 10.0, height: 10.0, child: CircularProgressIndicator());
       },
     );
-
   }
 }

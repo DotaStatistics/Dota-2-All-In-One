@@ -61,4 +61,14 @@ class FontStyles {
     );
   }
 
+  static TextStyle searchField(){
+    return TextStyle(
+
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+      fontSize: 20.0,
+
+    );
+  }
+
 }

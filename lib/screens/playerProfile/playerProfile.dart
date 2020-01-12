@@ -5,7 +5,6 @@ import 'components/recentMatchesList.dart';
 import 'package:dota_stats/apiCalls.dart';
 import 'package:dota_stats/database.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:dota_stats/models/playerInfo.dart';
 import 'components/review.dart';
 
 class PlayerProfile extends StatefulWidget {
