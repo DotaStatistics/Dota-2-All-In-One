@@ -5,25 +5,28 @@ import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../../models/dotaAbility.dart';
+
+
 class HeroDetailsScreen extends StatefulWidget {
   Map<String, dynamic> data;
   final String itemKey;
-  Map<String, dynamic> dataAbilities;
+  Map<String, dynamic> dotaAbilities;
   final String itemKeyAbilities;
 
   HeroDetailsScreen(
-      this.data, this.itemKey, this.dataAbilities, this.itemKeyAbilities);
+      this.data, this.itemKey, this.dotaAbilities, this.itemKeyAbilities);
 
   @override
-  HeroDetailsState createState() => HeroDetailsState(data, itemKey);
+  HeroDetailsState createState() => HeroDetailsState();
 }
 
 class HeroDetailsState extends State<HeroDetailsScreen> {
-  Map<String, dynamic> data;
-  Map<String, dynamic> dataAbilities;
-  String itemKey;
+//  Map<String, dynamic> data;
+//  Map<String, DotaAbility> dataAbilities;
+//  String itemKey;
 
-  HeroDetailsState(this.data, this.itemKey);
+//  HeroDetailsState(this.data, this.itemKey);
 
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
@@ -39,7 +42,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                 Container(
                     padding: const EdgeInsets.only(bottom: 0),
                     child: AutoSizeText(
-                      data[itemKey]["displayName"].toUpperCase(),
+                      widget.data[widget.itemKey]["displayName"].toUpperCase(),
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w900,
@@ -49,7 +52,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
-                    data[itemKey]["stat"]["attackType"].toString() + " Hero",
+                    widget.data[widget.itemKey]["stat"]["attackType"].toString() + " Hero",
                     style: TextStyle(
                       color: Colors.grey[600],
                     ),
@@ -70,7 +73,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                     width: 60,
                   ),
                   Text(
-                    ((data[itemKey]["stat"]["hpRegen"]) * 1000).toString(),
+                    ((widget.data[widget.itemKey]["stat"]["hpRegen"]) * 1000).toString(),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,
@@ -86,7 +89,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                     width: 60,
                   ),
                   Text(
-                    ((data[itemKey]["stat"]["hpRegen"]) * 1000).toString(),
+                    ((widget.data[widget.itemKey]["stat"]["hpRegen"]) * 1000).toString(),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,
@@ -113,7 +116,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
       ),
     );
 
-    Widget spellSection = Container(
+    Widget statSection = Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -121,6 +124,19 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
             _buildStats('assets/images/Armor_Icon.png', "startingArmor"),
             _buildStats('assets/images/Damage_Icon.png', "startingArmor"),
             _buildStats('assets/images/Movespeed_Icon.png', "startingArmor"),
+          ]),
+        ],
+      ),
+    );
+
+    Widget abilitiesSection = Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            _buildAbilities(widget.data[widget.itemKey]["abilities"][0]["abilityId"]),
+            _buildAbilities(widget.data[widget.itemKey]["abilities"][1]["abilityId"]),
+            _buildAbilities(widget.data[widget.itemKey]["abilities"][2]["abilityId"]),
           ]),
         ],
       ),
@@ -152,7 +168,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
                   bottomLeft: Radius.circular(15)),
               child: Image.network(
                 "http://cdn.dota2.com/apps/dota2/images/heroes/" +
-                    data[itemKey]["shortName"] +
+                    widget.data[widget.itemKey]["shortName"] +
                     "_full.png",
                 fit: BoxFit.cover,
               ),
@@ -160,7 +176,8 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
             Padding(padding: EdgeInsets.only(left: 16.0)),
             titleSection,
             attributeSection,
-            spellSection,
+            statSection,
+            abilitiesSection,
             textSection,
           ],
         ),
@@ -218,7 +235,7 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
     );
   }
 
-  Column _buildSkills(int abilityId) {
+  Column _buildAbilities(int abilityId) {
     String attrValue = _getSkillName(abilityId).toString();
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -227,18 +244,19 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(
-            attrValue,
+            returnSkillDisplayName(abilityId),
+//            data["1"]["abilities"][2]["abilityId"].toString(),
             style: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ),
         Image.network(
-//          "http://cdn.dota2.com/apps/dota2/images/abilities/"+returnSkillName(abilityId)+"_lg.png",
-          "http://cdn.dota2.com/apps/dota2/images/abilities/" +
-              "faceless_void_time_dilation" +
-              "_lg.png",
+          "http://cdn.dota2.com/apps/dota2/images/abilities/"+returnSkillName(abilityId)+"_hp1.png",
+//          "http://cdn.dota2.com/apps/dota2/images/abilities/" +
+//              "faceless_void_time_dilation" +
+//              "_lg.png",
           height: 40,
           width: 40,
         ),
@@ -247,13 +265,33 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
   }
 
   String returnBio() {
-    return data[itemKey]["language"]["bio"];
+    return widget.data[widget.itemKey]["language"]["bio"];
   }
 
   String returnSkillName(int abilityId) {
-//    for(var i=0; i<dataAbilities.length; i++) {
-//      if(dataAbilities[itemKey]==abilityId) {
-    print(dataAbilities[abilityId]);
+    List<dynamic>
+
+    abilityList=widget.dotaAbilities.entries.map((e)=>e.value).toList();
+    Map<String, dynamic> test = abilityList.firstWhere((e2)=>e2["id"]==(abilityId));
+    return test["name"];
+//    for(var entry in dataAbilities.entries) {
+//      if(entry.value == ) {
+//    print(dataAbilities[abilityId]);
+//        return dataAbilities[abilityId];
+//
+//      }
+//    }
+  }
+
+  String returnSkillDisplayName(int abilityId) {
+    List<dynamic>
+
+    abilityList=widget.dotaAbilities.entries.map((e)=>e.value).toList();
+    Map<String, dynamic> test = abilityList.firstWhere((e2)=>e2["id"]==(abilityId));
+    return test["language"]["displayName"];
+//    for(var entry in dataAbilities.entries) {
+//      if(entry.value == ) {
+//    print(dataAbilities[abilityId]);
 //        return dataAbilities[abilityId];
 //
 //      }
@@ -262,13 +300,13 @@ class HeroDetailsState extends State<HeroDetailsScreen> {
 
   String _getAttributeValue(String attribute) {
 //    return data[itemKey]["stat"][attribute+"Base"].toString()+" + "+ data[itemKey]["stat"][attribute+"Gain"].toString() ;
-    return (data[itemKey]["stat"][attribute + "Base"] +
-            data[itemKey]["stat"][attribute + "Gain"])
+    return (widget.data[widget.itemKey]["stat"][attribute + "Base"] +
+            widget.data[widget.itemKey]["stat"][attribute + "Gain"])
         .toString();
   }
 
   String _getStatValue(String stat) {
-    return data[itemKey]["stat"][stat].toString();
+    return widget.data[widget.itemKey]["stat"][stat].toString();
   }
 
   String _getSkillName(int abilityId) {

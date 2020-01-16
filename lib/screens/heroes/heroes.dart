@@ -17,7 +17,7 @@ class HeroScreen extends StatefulWidget {
 class HeroState extends State<HeroScreen> {
 //  final String url = "https://api.stratz.com/api/v1/Hero";
   Map<String, dynamic> data = new Map();
-  Map<String, dynamic> dataAbilities = new Map();
+  Map<String, dynamic> dotaAbilities = new Map();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class HeroState extends State<HeroScreen> {
     print(response.body);
 
     setState(() {
-      dataAbilities = json.decode(response.body);
+      dotaAbilities = json.decode(response.body);
     });
     return "Success";
   }
@@ -64,7 +64,7 @@ class HeroState extends State<HeroScreen> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return HeroDetailsScreen(
-                      data, itemKey, dataAbilities, itemKeyAbilities);
+                      data, itemKey, dotaAbilities, itemKeyAbilities);
                 }));
               },
               child: new Center(
